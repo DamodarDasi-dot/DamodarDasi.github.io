@@ -369,3 +369,4 @@ main>.hero:not(.hero-home){display:block}
 }
 
 .card-status{display:flex;margin-top:18px;padding-top:14px;border-top:1px solid var(--line)}
+.portrait{margin:0;border-bottom:1px solid var(--line-2);background:#e9ebee}.portrait img{display:block;width:100%;height:auto;aspect-ratio:1/1;object-fit:cover;object-position:50% 30%}@media(max-width:960px){.portrait{max-width:320px}}
