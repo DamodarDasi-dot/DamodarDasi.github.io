@@ -367,3 +367,5 @@ main>.hero:not(.hero-home){display:block}
   body{background:#fff!important;color:#0f172a!important}
   a{color:#0f172a!important}
 }
+
+.card-status{display:flex;margin-top:18px;padding-top:14px;border-top:1px solid var(--line)}
