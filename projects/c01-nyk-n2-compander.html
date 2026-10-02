@@ -5,15 +5,15 @@
 .c01-views{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}
 .c01-views figure{margin:0;border:1px solid var(--line-2);background:var(--bg-2)}.c01-views img{display:block;width:100%;height:auto;aspect-ratio:4/3;object-fit:cover;background:#9aa6b4}
 .c01-views strong{display:block;color:var(--text);font-weight:600;font-size:14.5px}.c01-views figcaption span{display:block}
-.c01-schem-wrap{display:grid;grid-template-columns:.8fr 1.4fr;gap:36px;align-items:center;margin-top:40px;padding:28px;border:1px solid var(--line-2);background:var(--bg-2)}
-.c01-schem-wrap h3{margin:0 0 10px;font-size:19px;font-weight:600}.c01-schem-wrap p{color:var(--muted);margin:0 0 12px}
-.c01-schem{width:100%;height:auto}.c01-schem .bx{fill:#0B1118;stroke:#5B7184;stroke-width:1.2}.c01-schem .bx.hi{stroke:#22D3EE}
-.c01-schem .st rect{fill:rgba(34,211,238,.08);stroke:#22D3EE;stroke-width:1.3}.c01-schem .st rect.ex{fill:rgba(56,189,248,.12);stroke:#38BDF8}
-.c01-schem .tx{fill:#F1F5F9;font:500 13px var(--sans);text-anchor:middle}.c01-schem .ts{fill:#F1F5F9;font:500 12px var(--mono);text-anchor:middle}
-.c01-schem .sl{fill:#94A3B8;font:400 11px var(--mono)}.c01-schem .hi2{fill:#22D3EE}
-.c01-schem .sh{stroke:#94A3B8;stroke-width:3}.c01-schem .fl{fill:none;stroke:#22D3EE;stroke-width:2}.c01-schem .fl2{fill:none;stroke:#38BDF8;stroke-width:2;stroke-dasharray:6 4}
-.c01-schem .aux{fill:none;stroke:#5B7184;stroke-width:1.2;stroke-dasharray:3 3}
-@media(max-width:900px){.c01-views{grid-template-columns:1fr 1fr}.c01-schem-wrap{grid-template-columns:1fr}}
+
+
+
+
+
+
+
+
+@media(max-width:900px){.c01-views{grid-template-columns:1fr 1fr}}
 @media(max-width:560px){.c01-views{grid-template-columns:1fr}}
 </style><style>
 .aux-wrap{margin-top:28px;padding:28px;border:1px solid var(--line-2);background:var(--bg-2)}
@@ -49,23 +49,7 @@
 <figure><a href="../assets/projects/c01/c01-3d-package-coolers.jpg" target="_blank" rel="noopener"><img src="../assets/projects/c01/c01-3d-package-coolers.jpg" alt="3D model view showing the coolers, process piping and pipe-support frame" width="922" height="708" loading="lazy"></a><figcaption><strong>Coolers &amp; process piping</strong><span>Shell-and-tube coolers with process piping and support frame.</span></figcaption></figure>
 <figure><a href="../assets/projects/c01/c01-3d-package-tie-ins.jpg" target="_blank" rel="noopener"><img src="../assets/projects/c01/c01-3d-package-tie-ins.jpg" alt="3D model view with customer tie-in piping highlighted in red" width="795" height="677" loading="lazy"></a><figcaption><strong>Customer tie-ins</strong><span>Interface piping to the customer highlighted in red.</span></figcaption></figure>
 </div>
-<div class="c01-schem-wrap"><div><h3>How the package fits together</h3><p>One motor drives an integral gearbox carrying three compressor stages and an expander. Lube-oil and seal-gas systems sit on the same base frame, so the whole package lifts and ships as one unit.</p><p class="fine">Simplified schematic.</p></div><svg class="c01-schem" viewBox="0 0 760 330" role="img" aria-labelledby="c01s-t c01s-d"><title id="c01s-t">Simplified package schematic</title><desc id="c01s-d">Motor drives a common gearbox carrying three compressor stages and one expander stage. Nitrogen is compressed from 7.4 to 35.3 bar absolute; the expander discharges at about 7.9 bar absolute. Lube-oil and seal-gas systems serve the machine, all mounted on one base frame.</desc>
-<defs><marker id="c01a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0L10 5L0 10z" fill="#22D3EE"/></marker><marker id="c01b" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0L10 5L0 10z" fill="#38BDF8"/></marker></defs>
-<rect x="8" y="8" width="744" height="314" fill="none" stroke="#2A3D4D" stroke-dasharray="6 5"/><text x="20" y="312" class="sl">BASE FRAME · SINGLE-LIFT PACKAGE</text>
-<rect x="30" y="125" width="110" height="70" class="bx"/><text x="85" y="156" class="tx">Electric</text><text x="85" y="174" class="tx">motor</text>
-<path d="M140 160H180" class="sh"/><rect x="180" y="120" width="170" height="80" class="bx hi"/><text x="265" y="156" class="tx">Integral</text><text x="265" y="174" class="tx">gearbox</text>
-<g class="st"><rect x="190" y="52" width="44" height="40"/><rect x="245" y="52" width="44" height="40"/><rect x="300" y="52" width="44" height="40"/><rect x="245" y="230" width="44" height="40" class="ex"/></g>
-<text x="212" y="77" class="ts">C1</text><text x="267" y="77" class="ts">C2</text><text x="322" y="77" class="ts">C3</text><text x="267" y="255" class="ts">EX</text>
-<path d="M212 92v28M267 92v28M322 92v28M267 200v30" class="sh"/>
-<path d="M40 72H188" class="fl" marker-end="url(#c01a)"/><text x="40" y="62" class="sl hi2">N₂ in · 7.4 bar(a)</text>
-<path d="M234 72h9M289 72h9" class="fl" marker-end="url(#c01a)"/>
-<path d="M322 52V36H500" class="fl" marker-end="url(#c01a)"/><text x="508" y="40" class="sl hi2">Discharge · 35.3 bar(a)</text>
-<path d="M500 250H291" class="fl2" marker-end="url(#c01b)"/><text x="508" y="254" class="sl">Expander inlet</text>
-<path d="M267 270V292H500" class="fl2" marker-end="url(#c01b)"/><text x="508" y="296" class="sl">Expander out · ~7.9 bar(a)</text>
-<rect x="540" y="70" width="190" height="56" class="bx"/><text x="635" y="94" class="tx">Lube-oil system</text><text x="635" y="113" class="sl" text-anchor="middle">API 614 · pumps · coolers</text>
-<rect x="540" y="140" width="190" height="56" class="bx"/><text x="635" y="164" class="tx">Seal-gas system</text><text x="635" y="183" class="sl" text-anchor="middle">API 692 · seal-gas panel</text>
-<path d="M540 98H410v52h-60M540 168H410" class="aux"/>
-</svg></div><div class="aux-wrap"><div class="aux-head"><h3>Auxiliary systems I modelled</h3><p>Typical arrangements of the two systems I built in 3D on this package — the lube-oil system and the seal-gas system — drawn as simplified schematics.</p></div>
+<div class="aux-wrap"><div class="aux-head"><h3>Auxiliary systems I modelled</h3><p>Typical arrangements of the two systems I built in 3D on this package — the lube-oil system and the seal-gas system — drawn as simplified schematics.</p></div>
 <div class="aux-grid"><figure><svg class="aux-dg" viewBox="0 0 560 340" role="img" aria-labelledby="lo-t lo-d"><title id="lo-t">Typical lube-oil system</title><desc id="lo-d">Oil reservoir with heater and demister feeds a main pump and an auxiliary oil pump through suction strainers. A pressure control valve spills excess flow back to the reservoir. Oil passes through twin coolers and twin filters with transfer valves, is monitored by pressure and temperature transmitters, supplies the bearings and gearbox, and drains back to the reservoir.</desc><defs><marker id="ar1" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0 0L10 5L0 10z" fill="#22D3EE"/></marker><marker id="ar2" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0 0L10 5L0 10z" fill="#94A3B8"/></marker></defs>
 <rect x="20" y="200" width="140" height="90" class="eq"/><path d="M40 270h10l5-10 6 20 6-20 6 20 5-10h10" class="ln"/><text x="90" y="225" class="tx">Oil reservoir</text><text x="98" y="275" class="sl">heater</text>
 <path d="M120 200V172" class="ln"/><rect x="108" y="150" width="24" height="22" class="eq"/><text x="140" y="165" class="sl">Demister</text>
@@ -96,4 +80,4 @@
 <div><b>API 692</b><span>Dry gas seal system</span></div>
 <div><b>ASME B31.3</b><span>Process and lube-oil piping</span></div>
 <div><b>ABS rules</b><span>American Bureau of Shipping classification for marine (shipyard) service</span></div></div>
-<p class="fine" style="margin-top:14px">Other equipment and components to the applicable universal standards.</p></section><section class="section"><div class="section-head"><span>06</span><h2>Execution Flow</h2></div><div class="flow"><span>Design basis</span><i>→</i><span>3D package</span><i>→</i><span>Piping & systems</span><i>→</i><span>Drawings</span><i>→</i><span>MTO / BOQ</span><i>→</i><span>Customer review</span><i>→</i><span>Manufacturing</span><i>→</i><span>FAT</span></div></section><section class="section"><div class="section-head"><span>07</span><h2>Engineering Takeaway</h2></div><p class="lead">The 3D package model acted as the coordination reference for piping, equipment, drawings and manufacturing interfaces. This project strengthened my experience in integrating multiple auxiliary systems around a rotating-equipment package while maintaining a buildable overall arrangement.</p><a class="btn secondary" href="../index.html#projects">← Back to projects</a></section></main><footer><span>© 2026 Damodar Dasi</span><span>Non-confidential portfolio summary</span></footer><script src="../script.js"></script></body></html>
+<p class="fine" style="margin-top:14px">Other equipment and components to the applicable universal standards.</p></section><section class="section"><div class="section-head"><span>06</span><h2>Execution Flow</h2></div><div class="flow"><span>Design basis</span><i>→</i><span>3D package</span><i>→</i><span>Piping & systems</span><i>→</i><span>Drawings</span><i>→</i><span>MTO / BOQ</span><i>→</i><span>Customer review</span><i>→</i><span>Manufacturing</span><i>→</i><span>FAT</span></div></section><section class="section"><div class="section-head"><span>07</span><h2>Engineering Takeaway</h2></div><p class="lead">The 3D package model acted as the coordination reference for piping, equipment, drawings and manufacturing interfaces. This project strengthened my experience in integrating multiple auxiliary systems around a rotating-equipment package while maintaining a buildable overall arrangement. Because the package was built for shipyard service, the design also had to meet ABS (American Bureau of Shipping) rules alongside API 617, 614, 692 and ASME B31.3.</p><a class="btn secondary" href="../index.html#projects">← Back to projects</a></section></main><footer><span>© 2026 Damodar Dasi</span><span>Non-confidential portfolio summary</span></footer><script src="../script.js"></script></body></html>
