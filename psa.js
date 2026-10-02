@@ -58,29 +58,67 @@
     $('satB').style.transform = `scaleY(${p.sat[1] ? .78 : .04})`;
   }));
 
-  // ---------- C-03 · 4-stage integrally geared NG compressor ----------
-  const F1 = ['fIn', 'fS1', 'fIC1', 'fToS2'], F2 = ['fS2', 'fIC2', 'fToS3'], F3 = ['fS3', 'fIC3', 'fToS4'], F4 = ['fS4', 'fAC', 'fOut'];
-  const IGC = [
-    { t: 'Drive', dur: 4200, flow: [], fv: false, hl: ['motor', 'bull'],
-      l: ['The HV motor turns the bull gear. The bull gear drives two high-speed pinions,', 'each with an impeller on both ends: four stages in one integral gearbox.'] },
-    { t: 'Stage 1 → intercooler 1', dur: 4400, flow: F1, fv: false, hl: ['s1', 's2'],
-      l: ['Natural gas enters stage 1 at 13.21 bar(a) and 25 °C. The air-cooled fin-fan', 'intercooler removes the heat of compression before stage 2.'] },
-    { t: 'Stage 2 → intercooler 2', dur: 4400, flow: [...F1, ...F2], fv: false, hl: ['s2', 's3'],
-      l: ['Stage 2, on the other end of pinion 1, compresses the cooled gas again;', 'intercooler 2 cools it before it crosses to pinion 2.'] },
-    { t: 'Stage 3 → intercooler 3', dur: 4400, flow: [...F1, ...F2, ...F3], fv: false, hl: ['s3', 's4'],
-      l: ['Stage 3 raises the pressure further and intercooler 3 cools the gas', 'ahead of the final stage.'] },
-    { t: 'Stage 4 → after cooler → discharge', dur: 5000, flow: [...F1, ...F2, ...F3, ...F4], fv: false, hl: ['s4'],
-      l: ['Stage 4 delivers 50.8 bar(a) through the air-cooled after cooler. Dry gas seals', 'on every impeller shaft keep the gas inside the casing.'] },
-    { t: 'Anti-surge recycle', dur: 5000, flow: [...F1, ...F2, ...F3, ...F4, 'fRc'], fv: true, hl: [],
-      l: ['At low flow the anti-surge valve opens and returns gas through the fin-fan', 'recycle cooler to suction, keeping every stage away from surge.'] },
-  ];
-  const IF = ['fIn', 'fS1', 'fIC1', 'fToS2', 'fS2', 'fIC2', 'fToS3', 'fS3', 'fIC3', 'fToS4', 'fS4', 'fAC', 'fOut', 'fRc'];
-  const IH = ['motor', 'bull', 's1', 's2', 's3', 's4'];
-  document.querySelectorAll('[data-igc]').forEach(root => stepper(root, 'igc', IGC, (p, $) => {
-    IF.forEach(f => $(f).classList.toggle('on', p.flow.includes(f)));
-    IH.forEach(h => $(h).classList.toggle('hl', p.hl.includes(h)));
-    $('fv').classList.toggle('open', p.fv);
-  }));
+  // ---------- Compressor packages (C-03, C-04, C-05) ----------
+  const cum = (...g) => g.flat();
+  const C3 = [['fIn', 'fS1', 'fIC1', 'fToS2'], ['fS2', 'fIC2', 'fToS3'], ['fS3', 'fIC3', 'fToS4'], ['fS4', 'fAC', 'fOut']];
+  const C5 = [['fIn'], ['fS1', 'fIC1', 'fToS2'], ['fS2', 'fIC2', 'fToS3'], ['fS3']];
+  const tr = m => [[`f${m}in`, `f${m}12`, `f${m}23`, `f${m}3`, `f${m}wi`], [`f${m}c`, `f${m}out`]];
+  const C4M = tr('M'), C4B = tr('B'), C4E = ['fOff', 'fE21', 'fEout'];
+  const COMP = {
+    c03: [
+      { t: 'Drive', dur: 4200, flow: [], open: [], hl: ['motor', 's1', 's2', 's3', 's4'],
+        l: ['The HV motor turns the bull gear. The bull gear drives two high-speed pinions,', 'each with an impeller on both ends: four stages in one integral gearbox.'] },
+      { t: 'Stage 1 → intercooler 1', dur: 4400, flow: cum(C3[0]), open: [], hl: ['s1', 's2'],
+        l: ['Natural gas enters stage 1 at 13.21 bar(a) and 25 °C. The air-cooled fin-fan', 'intercooler removes the heat of compression before stage 2.'] },
+      { t: 'Stage 2 → intercooler 2', dur: 4400, flow: cum(C3[0], C3[1]), open: [], hl: ['s2', 's3'],
+        l: ['Stage 2, on the other end of pinion 1, compresses the cooled gas again;', 'intercooler 2 cools it before it crosses to pinion 2.'] },
+      { t: 'Stage 3 → intercooler 3', dur: 4400, flow: cum(C3[0], C3[1], C3[2]), open: [], hl: ['s3', 's4'],
+        l: ['Stage 3 raises the pressure further and intercooler 3 cools the gas', 'ahead of the final stage.'] },
+      { t: 'Stage 4 → after cooler → discharge', dur: 5000, flow: cum(...C3), open: [], hl: ['s4'],
+        l: ['Stage 4 delivers 50.8 bar(a) through the air-cooled after cooler. Dry gas seals', 'on every impeller shaft keep the gas inside the casing.'] },
+      { t: 'Anti-surge recycle', dur: 5000, flow: cum(...C3, ['fRc']), open: ['fv'], hl: [],
+        l: ['At low flow the anti-surge valve opens and returns gas through the fin-fan', 'recycle cooler to suction, keeping every stage away from surge.'] },
+    ],
+    c04: [
+      { t: 'Drives', dur: 4200, flow: [], open: [], hl: ['motM', 'motB'],
+        l: ['The MAC has its own motor. The BAC and the two-stage expander (ETB) share', 'one double-ended common motor. Everything sits on a common platform.'] },
+      { t: 'MAC · three stages', dur: 4400, flow: cum(C4M[0]), open: [], hl: ['m1', 'm2', 'm3'],
+        l: ['Air at 0.95 bar(a) and 28.2 °C passes the filter-silencer into three integrally', 'geared stages, with water injection between stages (customer scope).'] },
+      { t: 'MAC → gas cooler → discharge', dur: 4400, flow: cum(...C4M), open: [], hl: [],
+        l: ['The water-cooled gas cooler takes out the heat of compression and the MAC', 'discharges at 5.35 bar(a) through its own line to the H₂O₂ process.'] },
+      { t: 'BAC · separate train', dur: 4600, flow: cum(...C4M, ...C4B), open: [], hl: ['b1', 'b2', 'b3'],
+        l: ['The BAC is an identical but separate train: its own stages, gas cooler', 'and discharge line. The two trains are never combined.'] },
+      { t: 'ETB energy recovery', dur: 5200, flow: cum(...C4M, ...C4B, C4E), open: [], hl: ['e1', 'e2', 'motB'],
+        l: ['Process off-gas at 3.42 bar(a) and 372.15 K expands through E2 and E1 to', '1.15 bar(a) and 283.5 K, returning power to the shared motor shaft.'] },
+      { t: 'Blow-off / anti-surge', dur: 4800, flow: cum(...C4M, ...C4B, C4E, ['fMbo', 'fBbo']), open: ['bovMAC', 'bovBAC'], hl: [],
+        l: ['At low demand each train opens its own blow-off valve ahead of the gas', 'cooler, keeping the stages out of surge.'] },
+    ],
+    c05: [
+      { t: 'Drive', dur: 4400, flow: [], open: [], hl: ['st'],
+        l: ['A customer-supplied steam turbine turns the bull gear through the coupling.', 'My scope ends at the compressor-side coupling.'] },
+      { t: 'Inlet & inlet guide vanes', dur: 4200, flow: cum(C5[0]), open: ['igv'], hl: ['s1'],
+        l: ['Air at 0.989 bar(a) and 40 °C enters through the filter-silencer house and', 'the inlet guide vanes, which trim the flow to match plant demand.'] },
+      { t: 'Stage 1 → intercooler 1', dur: 4400, flow: cum(C5[0], C5[1]), open: ['igv'], hl: ['s2'],
+        l: ['Stage 1 raises pressure and temperature. Water-cooled intercooler 1', '(cooling water 33 → 43 °C) removes the heat before stage 2.'] },
+      { t: 'Stage 2 → intercooler 2', dur: 4400, flow: cum(C5[0], C5[1], C5[2]), open: ['igv'], hl: ['s3'],
+        l: ['Stage 2 on the other end of pinion 1 compresses again, and intercooler 2', 'cools the air before the last stage on pinion 2.'] },
+      { t: 'Stage 3 → discharge', dur: 4800, flow: cum(...C5), open: ['igv'], hl: [],
+        l: ['Stage 3 delivers 6.013 bar(a) at 91.2 °C. The shaft-driven main oil pump on', 'the bull gear keeps the bearings fed while the machine runs.'] },
+      { t: 'Blow-off', dur: 4800, flow: cum(...C5, ['fBo']), open: ['igv', 'bov'], hl: [],
+        l: ['At low demand the blow-off valve opens and vents air through the silencer,', 'keeping the stages away from surge.'] },
+    ],
+  };
+  document.querySelectorAll('[data-comp]').forEach(root => {
+    const key = root.dataset.comp, PH = COMP[key];
+    if (!PH) return;
+    const all = k => [...new Set(PH.flatMap(p => p[k]))];
+    const F = all('flow'), O = all('open'), HL = all('hl');
+    stepper(root, key, PH, (p, $) => {
+      F.forEach(f => $(f)?.classList.toggle('on', p.flow.includes(f)));
+      O.forEach(v => $(v)?.classList.toggle('open', p.open.includes(v)));
+      HL.forEach(h => $(h)?.classList.toggle('hl', p.hl.includes(h)));
+    });
+  });
 
   // Homepage hero: switch between drawings
   const caps = {
@@ -95,7 +133,7 @@
     document.querySelectorAll('[data-ga-panel]').forEach(p => {
       const on = p.dataset.gaPanel === want;
       p.hidden = !on;
-      if (on) p.querySelector('[data-psa],[data-igc]')?.dispatchEvent(new Event('anim:show'));
+      if (on) p.querySelector('[data-psa],[data-comp]')?.dispatchEvent(new Event('anim:show'));
       if (on && want === 'ga') { const s = p.querySelector('svg'); if (s) s.replaceWith(s.cloneNode(true)); }
     });
     const cap = document.querySelector('[data-ga-cap]');
