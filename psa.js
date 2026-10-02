@@ -65,6 +65,20 @@
   const tr = m => [[`f${m}in`, `f${m}12`, `f${m}23`, `f${m}3`, `f${m}wi`], [`f${m}c`, `f${m}out`]];
   const C4M = tr('M'), C4B = tr('B'), C4E = ['fOff', 'fE21', 'fEout'];
   const COMP = {
+    f07: [
+      { t: 'Loading the tank', dur: 5000, flow: ['fLoad', 'fVR'], open: ['lv', 'flt'], hl: ['tkr', 'lp'],
+        l: ['A road tanker loads the tank through the loading pump; displaced vapour', 'returns to the tanker through the vapour-recovery line.'] },
+      { t: 'Intelligent tank gauging', dur: 4600, flow: ['fATG', 'fCloud'], open: ['lv', 'flt'], hl: ['cld'],
+        l: ['The intelligent ATG reports fuel level, temperature, density, water presence', 'and leak status to the fleet-management system in real time.'] },
+      { t: 'Driver & vehicle authorisation', dur: 4600, flow: ['fATG', 'fCloud'], open: ['lv', 'flt'], hl: ['idr', 'car', 'cld'],
+        l: ['The driver authenticates at the dispenser (card / PIN) and the vehicle is', 'recognised automatically at the nozzle before any fuel is released.'] },
+      { t: 'Dispensing', dur: 5400, flow: ['fDisp', 'fHose', 'fATG'], open: [], hl: ['disp', 'car'],
+        l: ['Fuel flows from the dispensing line through the dispenser meter, hose and', 'nozzle into the authorised vehicle.'] },
+      { t: 'Real-time records', dur: 4400, flow: ['fCloud', 'fATG'], open: [], hl: ['cld'],
+        l: ['Each transaction (driver, vehicle, litres, time) is sent to the fleet platform,', 'giving real-time history and audit-ready reports.'] },
+      { t: 'Venting & drain', dur: 4400, flow: ['fVent', 'fDrain'], open: ['drv'], hl: [],
+        l: ['Emergency and interstitial emergency vents protect the double-wall tank;', 'the drain line removes water and sludge from the tank bottom.'] },
+    ],
     f01: [
       { t: 'Bulk filling', dur: 5200, flow: ['fFill', 'fVR'], open: ['ofv', 'lv', 'flt'], hl: ['tkr'],
         l: ['A road tanker fills the compartment through the 3 in fill point and the overfill', 'protection valve; displaced vapour returns through the vapour-recovery line.'] },
