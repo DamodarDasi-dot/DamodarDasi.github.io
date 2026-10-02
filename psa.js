@@ -65,6 +65,18 @@
   const tr = m => [[`f${m}in`, `f${m}12`, `f${m}23`, `f${m}3`, `f${m}wi`], [`f${m}c`, `f${m}out`]];
   const C4M = tr('M'), C4B = tr('B'), C4E = ['fOff', 'fE21', 'fEout'];
   const COMP = {
+    f01: [
+      { t: 'Bulk filling', dur: 5200, flow: ['fFill', 'fVR'], open: ['ofv', 'lv', 'flt'], hl: ['tkr'],
+        l: ['A road tanker fills the compartment through the 3 in fill point and the overfill', 'protection valve; displaced vapour returns through the vapour-recovery line.'] },
+      { t: 'Level & leak monitoring', dur: 4400, flow: ['fATG', 'fLeak'], open: ['lv', 'flt'], hl: [],
+        l: ['The ATG probe and console track the fuel level, and interstitial leak sensing', 'watches the space between the 6 mm inner and outer tank walls.'] },
+      { t: 'Dispensing', dur: 5600, flow: ['fProd', 'fHose', 'fATG'], open: [], hl: ['stp', 'disp', 'car'],
+        l: ['The submersible turbine pump sends fuel through the 2 in product line to the', 'dispenser (meter, filter) and through the hose and nozzle to the vehicle.'] },
+      { t: 'Breathing & emergency venting', dur: 4400, flow: ['fVent'], open: [], hl: [],
+        l: ['Breather vents handle normal tank breathing; emergency vents relieve pressure', 'in a fire. Design pressure 7 kPa, leak test 21 kPa.'] },
+      { t: 'Safety systems', dur: 4600, flow: ['fATG', 'fLeak'], open: [], hl: [],
+        l: ['Explosion-proof control panel and lighting, static earthing, spill tray and drain,', '75 mm fire-guard insulation (2 h) and fire-safety equipment complete the unit.'] },
+    ],
     c01: [
       { t: 'Drive', dur: 4200, flow: [], open: [], hl: ['motor', 's1', 's2', 's3', 'ex'],
         l: ['The motor turns the bull gear. Two high-speed pinions carry three compressor', 'stages and one expander stage: a compander in a single integral gearbox.'] },
