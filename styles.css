@@ -434,6 +434,7 @@ main>.hero:not(.hero-home){display:block}
 .psa .iwi{fill:#38BDF8}
 .psa .pf.wi{stroke:#38BDF8;stroke-width:2.4;stroke-dasharray:2 5}
 .psa .pf.warm{stroke:#FBBF24}
+.psa .pf.cold{stroke:#BAE6FD}
 .psa .ie.iexp,.psa .imp.iexp .ihb{stroke:#A5B4FC}
 .psa .imp.iexp{animation-direction:reverse}
 @keyframes teeth{to{stroke-dashoffset:-10}}

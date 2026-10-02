@@ -65,6 +65,34 @@
   const tr = m => [[`f${m}in`, `f${m}12`, `f${m}23`, `f${m}3`, `f${m}wi`], [`f${m}c`, `f${m}out`]];
   const C4M = tr('M'), C4B = tr('B'), C4E = ['fOff', 'fE21', 'fEout'];
   const COMP = {
+    c01: [
+      { t: 'Drive', dur: 4200, flow: [], open: [], hl: ['motor', 's1', 's2', 's3', 'ex'],
+        l: ['The motor turns the bull gear. Two high-speed pinions carry three compressor', 'stages and one expander stage: a compander in a single integral gearbox.'] },
+      { t: 'Stage 1 → intercooler 1', dur: 4400, flow: ['fIn', 'fS1', 'fIC1', 'fToS2'], open: [], hl: ['s1'],
+        l: ['Nitrogen enters stage 1 at 7.4 bar(a). The water-cooled intercooler removes', 'the heat of compression before stage 2.'] },
+      { t: 'Stage 2 → intercooler 2', dur: 4400, flow: ['fIn', 'fS1', 'fIC1', 'fToS2', 'fS2', 'fIC2', 'fToS3'], open: [], hl: ['s2'],
+        l: ['Stage 2 compresses the cooled nitrogen again and intercooler 2 cools it', 'before it crosses to pinion 2.'] },
+      { t: 'Stage 3 → after cooler → discharge', dur: 4800, flow: ['fIn', 'fS1', 'fIC1', 'fToS2', 'fS2', 'fIC2', 'fToS3', 'fS3', 'fAC', 'fOut'], open: [], hl: ['s3'],
+        l: ['Stage 3 delivers 35.3 bar(a) through the water-cooled after cooler. Tandem', 'dry gas seals on every shaft end keep the nitrogen in the casings.'] },
+      { t: 'Expander stage', dur: 4800, flow: ['fIn', 'fS1', 'fIC1', 'fToS2', 'fS2', 'fIC2', 'fToS3', 'fS3', 'fAC', 'fOut', 'fEin', 'fEout'], open: [], hl: ['ex'],
+        l: ['The expander on pinion 2 lets gas down to about 7.9 bar(a) and feeds its', 'power back into the gear train, cutting the motor load.'] },
+      { t: 'Anti-surge recycle', dur: 4800, flow: ['fIn', 'fS1', 'fIC1', 'fToS2', 'fS2', 'fIC2', 'fToS3', 'fS3', 'fAC', 'fOut', 'fEin', 'fEout', 'fRc'], open: ['fv'], hl: [],
+        l: ['At low flow the anti-surge valve opens and returns cooled discharge gas to', 'suction, keeping the compressor stages away from surge.'] },
+    ],
+    c02: [
+      { t: 'Drive', dur: 4200, flow: ['fLo', 'fLr', 'fLc'], open: [], hl: ['motor', 's1'],
+        l: ['The HV motor drives the bull gear, which spins one high-speed pinion', 'carrying the single impeller. All on one base frame.'] },
+      { t: 'BOG inlet & throttle valve', dur: 4400, flow: ['fLo', 'fLr', 'fLc', 'fIn'], open: ['itv'], hl: ['s1'],
+        l: ['Boil-off gas arrives at 1.05 bar(a) and −158.3 °C through the isolation', 'valve and strainer. The inlet throttle valve sets the flow.'] },
+      { t: 'Compression → discharge', dur: 4400, flow: ['fLo', 'fLr', 'fLc', 'fIn', 'fOut'], open: ['itv'], hl: [],
+        l: ['The single stage lifts the gas to 1.67 bar(a); it leaves through the check', 'valve to the plant.'] },
+      { t: 'Dry gas seal · N₂', dur: 4600, flow: ['fLo', 'fLr', 'fLc', 'fIn', 'fOut', 'fSg'], open: ['itv', 'pcv'], hl: [],
+        l: ['Clean, dry nitrogen at minimum 4 barg passes twin filters and a pressure', 'control valve to the dry gas seal, keeping the cold BOG in the casing.'] },
+      { t: 'Lube oil', dur: 4600, flow: ['fLo', 'fLr', 'fLc', 'fIn', 'fOut', 'fSg'], open: ['itv', 'pcv'], hl: [],
+        l: ['The lube-oil console (main and auxiliary pumps, filter) feeds the gearbox and', 'bearings; an air-cooled fan cooler rejects the oil heat.'] },
+      { t: 'Anti-surge recycle', dur: 4800, flow: ['fLo', 'fLr', 'fLc', 'fIn', 'fOut', 'fSg', 'fRc'], open: ['itv', 'pcv', 'fv'], hl: [],
+        l: ['At low flow the anti-surge valve opens and returns gas to suction,', 'downstream of the inlet throttle valve.'] },
+    ],
     c03: [
       { t: 'Drive', dur: 4200, flow: [], open: [], hl: ['motor', 's1', 's2', 's3', 's4'],
         l: ['The HV motor turns the bull gear. The bull gear drives two high-speed pinions,', 'each with an impeller on both ends: four stages in one integral gearbox.'] },
