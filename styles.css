@@ -438,6 +438,27 @@ main>.hero:not(.hero-home){display:block}
 .psa .ie.iexp,.psa .imp.iexp .ihb{stroke:#A5B4FC}
 .psa .imp.iexp{animation-direction:reverse}
 @keyframes teeth{to{stroke-dashoffset:-10}}
+/* ---- Recognition ---- */
+.awards{margin-top:56px;border-top:1px solid var(--line-2);padding-top:36px}
+.awards-head{display:flex;justify-content:space-between;gap:24px;align-items:baseline;flex-wrap:wrap}
+.awards-head h3{margin:0;font-size:20px;font-weight:600}
+.awards-head p{margin:0;color:var(--muted);max-width:60ch;font-size:15px}
+.award-stats{display:grid;grid-template-columns:1fr 1fr;gap:0;margin-top:22px;border:1px solid var(--line-2)}
+.award-stats>div{display:flex;gap:18px;align-items:center;padding:18px 20px;background:var(--bg-2)}
+.award-stats>div+div{border-left:1px solid var(--line-2)}
+.award-stats b{font:500 30px/1 var(--mono);color:var(--accent)}
+.award-stats strong{display:block;font-weight:600;font-size:15.5px}
+.award-stats span{display:block;color:var(--muted);font-size:13.5px;margin-top:3px}
+.award-stats em{font-style:normal;color:var(--text);font-weight:600}
+.award-stats .hl{background:linear-gradient(90deg,rgba(34,211,238,.12),rgba(34,211,238,.02));box-shadow:inset 3px 0 0 var(--accent)}
+.award-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-top:18px}
+.award-grid figure{margin:0;border:1px solid var(--line-2);background:var(--bg-2)}
+.award-grid img{display:block;width:100%;height:auto;transition:opacity .2s}
+.award-grid a:hover img{opacity:.85}
+.award-grid figcaption{padding:10px 12px;border-top:1px solid var(--line-2)}
+.award-grid strong{display:block;font-weight:600;font-size:14px}
+.award-grid span{display:block;color:var(--muted);font:400 11.5px/1.5 var(--mono)}
+@media(max-width:900px){.award-grid{grid-template-columns:1fr 1fr}.award-stats{grid-template-columns:1fr}.award-stats>div+div{border-left:0;border-top:1px solid var(--line-2)}}
 @media (prefers-reduced-motion:reduce){
   html{scroll-behavior:auto}
   *,*:before,*:after{animation:none!important;transition:none!important}
