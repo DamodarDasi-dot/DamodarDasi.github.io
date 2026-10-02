@@ -84,9 +84,9 @@
 
   // Homepage hero: switch between drawings
   const caps = {
-    ga: 'Fig. 1 — Typical skid-mounted package, elevation',
-    igc: 'Fig. 2 — C-03 4-stage integrally geared NG compressor, working principle',
-    psa: 'Fig. 3 — Twin-tower PSA nitrogen, working principle',
+    ga: 'Fig. 3 — Typical skid-mounted package, elevation',
+    igc: 'Fig. 1 — C-03 4-stage integrally geared NG compressor, working principle',
+    psa: 'Fig. 2 — Twin-tower PSA nitrogen, working principle',
   };
   const tabs = document.querySelectorAll('[data-ga-tab]');
   tabs.forEach(t => t.addEventListener('click', () => {
@@ -96,6 +96,7 @@
       const on = p.dataset.gaPanel === want;
       p.hidden = !on;
       if (on) p.querySelector('[data-psa],[data-igc]')?.dispatchEvent(new Event('anim:show'));
+      if (on && want === 'ga') { const s = p.querySelector('svg'); if (s) s.replaceWith(s.cloneNode(true)); }
     });
     const cap = document.querySelector('[data-ga-cap]');
     if (cap) cap.textContent = caps[want];
