@@ -58,31 +58,34 @@
     $('satB').style.transform = `scaleY(${p.sat[1] ? .78 : .04})`;
   }));
 
-  // ---------- Integrally geared compressor ----------
+  // ---------- C-03 · 4-stage integrally geared NG compressor ----------
+  const F1 = ['fIn', 'fS1', 'fIC1', 'fToS2'], F2 = ['fS2', 'fIC2', 'fToS3'], F3 = ['fS3', 'fIC3', 'fToS4'], F4 = ['fS4', 'fAC', 'fOut'];
   const IGC = [
-    { t: 'Drive', dur: 4200, flow: [], igv: false, hl: ['motor', 'bull'],
-      l: ['The motor turns the large bull gear. The bull gear drives small pinions at much', 'higher speed, and each pinion carries an impeller on one or both ends.'] },
-    { t: 'Inlet & inlet guide vanes', dur: 4200, flow: ['fIn'], igv: true, hl: ['s1'],
-      l: ['Air enters through the inlet guide vanes, which pre-swirl and throttle the flow', 'so the machine can match the plant demand efficiently before stage 1.'] },
-    { t: 'Stage 1 → intercooler 1', dur: 4600, flow: ['fIn', 'fS1', 'fIC1', 'fToS2'], igv: true, hl: ['s2'],
-      l: ['Stage 1 raises pressure and temperature. The water-cooled intercooler removes', 'the heat of compression before stage 2, which cuts the power needed.'] },
-    { t: 'Stage 2 → intercooler 2', dur: 4600, flow: ['fIn', 'fS1', 'fIC1', 'fToS2', 'fS2', 'fIC2', 'fToS3'], igv: true, hl: ['s3'],
-      l: ['Stage 2 on the other end of pinion 1 compresses the cooled air again, and', 'intercooler 2 brings it back down before the last stage on pinion 2.'] },
-    { t: 'Stage 3 → discharge', dur: 5200, flow: ['fIn', 'fS1', 'fIC1', 'fToS2', 'fS2', 'fIC2', 'fToS3', 'fS3'], igv: true, hl: [],
-      l: ['Stage 3 delivers air at final pressure to the aftercooler and process. Bearings, shaft', 'seals and the shaft-driven main oil pump keep the high-speed rotors stable.'] },
+    { t: 'Drive', dur: 4200, flow: [], fv: false, hl: ['motor', 'bull'],
+      l: ['The HV motor turns the bull gear. The bull gear drives two high-speed pinions,', 'each with an impeller on both ends: four stages in one integral gearbox.'] },
+    { t: 'Stage 1 → intercooler 1', dur: 4400, flow: F1, fv: false, hl: ['s1', 's2'],
+      l: ['Natural gas enters stage 1 at 13.21 bar(a) and 25 °C. The air-cooled fin-fan', 'intercooler removes the heat of compression before stage 2.'] },
+    { t: 'Stage 2 → intercooler 2', dur: 4400, flow: [...F1, ...F2], fv: false, hl: ['s2', 's3'],
+      l: ['Stage 2, on the other end of pinion 1, compresses the cooled gas again;', 'intercooler 2 cools it before it crosses to pinion 2.'] },
+    { t: 'Stage 3 → intercooler 3', dur: 4400, flow: [...F1, ...F2, ...F3], fv: false, hl: ['s3', 's4'],
+      l: ['Stage 3 raises the pressure further and intercooler 3 cools the gas', 'ahead of the final stage.'] },
+    { t: 'Stage 4 → after cooler → discharge', dur: 5000, flow: [...F1, ...F2, ...F3, ...F4], fv: false, hl: ['s4'],
+      l: ['Stage 4 delivers 50.8 bar(a) through the air-cooled after cooler. Dry gas seals', 'on every impeller shaft keep the gas inside the casing.'] },
+    { t: 'Anti-surge recycle', dur: 5000, flow: [...F1, ...F2, ...F3, ...F4, 'fRc'], fv: true, hl: [],
+      l: ['At low flow the anti-surge valve opens and returns gas through the fin-fan', 'recycle cooler to suction, keeping every stage away from surge.'] },
   ];
-  const IF = ['fIn', 'fS1', 'fIC1', 'fToS2', 'fS2', 'fIC2', 'fToS3', 'fS3'];
-  const IH = ['motor', 'bull', 's1', 's2', 's3'];
+  const IF = ['fIn', 'fS1', 'fIC1', 'fToS2', 'fS2', 'fIC2', 'fToS3', 'fS3', 'fIC3', 'fToS4', 'fS4', 'fAC', 'fOut', 'fRc'];
+  const IH = ['motor', 'bull', 's1', 's2', 's3', 's4'];
   document.querySelectorAll('[data-igc]').forEach(root => stepper(root, 'igc', IGC, (p, $) => {
     IF.forEach(f => $(f).classList.toggle('on', p.flow.includes(f)));
     IH.forEach(h => $(h).classList.toggle('hl', p.hl.includes(h)));
-    $('igv').classList.toggle('open', p.igv);
+    $('fv').classList.toggle('open', p.fv);
   }));
 
   // Homepage hero: switch between drawings
   const caps = {
     ga: 'Fig. 1 — Typical skid-mounted package, elevation',
-    igc: 'Fig. 2 — Integrally geared compressor, working principle',
+    igc: 'Fig. 2 — C-03 4-stage integrally geared NG compressor, working principle',
     psa: 'Fig. 3 — Twin-tower PSA nitrogen, working principle',
   };
   const tabs = document.querySelectorAll('[data-ga-tab]');

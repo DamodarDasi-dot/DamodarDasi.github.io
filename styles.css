@@ -354,6 +354,7 @@ main>.hero:not(.hero-home){display:block}
 /* ---- PSA working-principle animation ---- */
 .psa{border:1px solid var(--line-2);background:linear-gradient(180deg,rgba(16,26,36,.85),rgba(7,16,24,.9))}
 .psa-svg{display:block;width:100%;height:auto;aspect-ratio:640/520}
+.psa-svg.igc-svg{aspect-ratio:640/560}
 .psa .pfr{fill:none;stroke:var(--line-2);stroke-width:1}
 .psa .pp{fill:none;stroke:#3E5568;stroke-width:3;stroke-linejoin:round}
 .psa .pe{fill:rgba(34,211,238,.05);stroke:var(--accent);stroke-width:1.4}
@@ -422,6 +423,11 @@ main>.hero:not(.hero-home){display:block}
 .psa .igv{stroke:#E0FBFF;stroke-width:2.4;stroke-linecap:round;transform:rotate(70deg);transition:transform 1.4s cubic-bezier(.4,0,.2,1)}
 .psa #igc-igv.open .igv{transform:rotate(25deg)}
 .psa .pf.hot{stroke:#F87171}.psa .pf.cool{stroke:#22D3EE}
+.psa .irc{fill:none;stroke:#3E5568;stroke-width:2.4;stroke-dasharray:7 4}
+.psa .ifr{fill:var(--bg);stroke:#7F95A8;stroke-width:1}
+.psa .ifan path{stroke:#E0FBFF;stroke-width:1.6;stroke-linecap:round}
+.psa .ifan{animation:spin .9s linear infinite}
+.psa .imp.hl .ihb{stroke:var(--accent)}
 @keyframes teeth{to{stroke-dashoffset:-10}}
 @media (prefers-reduced-motion:reduce){
   html{scroll-behavior:auto}
