@@ -459,6 +459,13 @@ main>.hero:not(.hero-home){display:block}
 .award-grid strong{display:block;font-weight:600;font-size:14px}
 .award-grid span{display:block;color:var(--muted);font:400 11.5px/1.5 var(--mono)}
 @media(max-width:900px){.award-grid{grid-template-columns:1fr 1fr}.award-stats{grid-template-columns:1fr}.award-stats>div+div{border-left:0;border-top:1px solid var(--line-2)}}
+/* ---- WhatsApp ---- */
+.wa-fab{position:fixed;right:18px;bottom:18px;z-index:60;display:flex;align-items:center;gap:8px;padding:11px 15px;background:#25D366;color:#062a17;font:600 13px/1 var(--sans);border-radius:999px;box-shadow:0 6px 22px rgba(0,0,0,.4);transition:transform .2s}
+.wa-fab:hover{transform:translateY(-2px)}
+.wa-fab svg{width:18px;height:18px}
+.channels a.wa b{color:#4ADE80}
+@media(max-width:600px){.wa-fab{padding:13px}.wa-fab span{display:none}.wa-fab svg{width:22px;height:22px}}
+@media print{.wa-fab{display:none!important}}
 @media (prefers-reduced-motion:reduce){
   html{scroll-behavior:auto}
   *,*:before,*:after{animation:none!important;transition:none!important}
