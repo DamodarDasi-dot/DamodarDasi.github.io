@@ -493,10 +493,10 @@ main>.hero:not(.hero-home){display:block}
 .stage .who{display:flex;align-items:center;gap:12px;margin-bottom:22px;color:var(--muted)}
 .stage .who b{color:var(--text);font-weight:600;letter-spacing:.14em}
 .stage .who:before{content:"";width:28px;height:1px;background:var(--accent)}
-.roles{margin:0;font-weight:600;text-transform:uppercase;letter-spacing:-.04em;line-height:.92;font-size:clamp(40px,5.4vw,84px)}
-.role-mask{position:relative;display:block;height:1.86em;overflow:hidden;overflow:clip;clip-path:inset(0 -100vw)}
+.roles{margin:0;font-weight:600;text-transform:uppercase;letter-spacing:-.04em;line-height:.92;font-size:clamp(40px,5vw,78px)}
+.role-mask{position:relative;display:block;height:1.86em;clip-path:inset(0 -100vw 0 -2px)}
 .role{position:absolute;inset:0;display:flex;flex-direction:column;transform:translateY(105%);transition:transform .9s cubic-bezier(.7,0,.2,1),opacity .9s;opacity:0}
-.role span{display:block;white-space:nowrap;background:linear-gradient(180deg,#F8FAFC 30%,#9AA7B4);-webkit-background-clip:text;background-clip:text;color:transparent;text-shadow:0 0 0 transparent}
+.role span{display:block;width:max-content;max-width:none;white-space:nowrap;background:linear-gradient(180deg,#F8FAFC 30%,#9AA7B4);-webkit-background-clip:text;background-clip:text;color:transparent;text-shadow:0 0 0 transparent}
 .role span+span{font-weight:500;opacity:.92}
 .role.on{transform:none;opacity:1}
 .role.out{transform:translateY(-105%);opacity:0}
