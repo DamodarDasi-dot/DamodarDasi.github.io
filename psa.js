@@ -28,6 +28,18 @@
       schedule();
     };
     steps.forEach((b, k) => b.addEventListener('click', () => { show(k); setRunning(false); }));
+    // prev / next / reset (added to every drawing's control bar)
+    const bar = document.createElement('div'); bar.className = 'psa-nav';
+    const mk = (lab, aria, fn) => { const b = document.createElement('button'); b.type = 'button'; b.textContent = lab; b.setAttribute('aria-label', aria); b.addEventListener('click', fn); bar.appendChild(b); return b; };
+    mk('◀', 'Previous step', () => { show((i - 1 + PH.length) % PH.length); setRunning(false); });
+    mk('▶', 'Next step', () => { show((i + 1) % PH.length); setRunning(false); });
+    mk('↺', 'Reset to first step', () => { show(0); setRunning(false); });
+    play.parentNode.insertBefore(bar, play);
+    root.addEventListener('keydown', e => {
+      if (e.target.closest('button') && !e.target.closest('.psa-ctrl')) return;
+      if (e.key === 'ArrowRight') { show((i + 1) % PH.length); setRunning(false); }
+      if (e.key === 'ArrowLeft') { show((i - 1 + PH.length) % PH.length); setRunning(false); }
+    });
     play.addEventListener('click', () => setRunning(!running));
     if ('IntersectionObserver' in window) {
       new IntersectionObserver(([e]) => { visible = e.isIntersecting && !root.closest('[hidden]'); schedule(); }, { threshold: .2 }).observe(root);

@@ -52,37 +52,49 @@
     counters.forEach(c => io.observe(c));
   }
 
-  // Project register filters + interlink with the expertise cards
+  // Project register: category filters + text search + expertise interlink
   const filterBtns = document.querySelectorAll('.filters button');
   const rows = [...document.querySelectorAll('.register a[data-cat]')];
   const note = document.querySelector('.filter-note');
+  const empty = document.querySelector('.reg-empty');
+  const q = document.getElementById('reg-q');
   const tagsOf = r => (r.dataset.tags || r.dataset.cat).split(' ');
-  let lastCard = null;
-  const apply = (tag, name, flash) => {
+  const textOf = r => (r.textContent + ' ' + (r.dataset.kw || '')).toLowerCase();
+  let tag = 'all', tagName = null, lastCard = null;
+  const apply = (flash) => {
+    const words = (q && q.value.trim().toLowerCase().split(/\s+/).filter(Boolean)) || [];
     let n = 0;
-    rows.forEach(r => { const on = tag === 'all' || tagsOf(r).includes(tag); r.hidden = !on; if (on) n++;
-      r.classList.remove('flash'); if (on && flash) { void r.offsetWidth; r.classList.add('flash'); } });
+    rows.forEach(r => {
+      const on = (tag === 'all' || tagsOf(r).includes(tag)) && words.every(w => textOf(r).includes(w));
+      r.hidden = !on; if (on) n++;
+      r.classList.remove('flash'); if (on && flash) { void r.offsetWidth; r.classList.add('flash'); }
+    });
     filterBtns.forEach(b => b.setAttribute('aria-pressed', String(b.dataset.filter === tag)));
+    if (empty) empty.hidden = n > 0;
+    document.querySelector('.register')?.classList.toggle('is-empty', n === 0);
     if (note) {
-      note.hidden = !name;
-      if (name) { note.querySelector('b').innerHTML = name; note.querySelector('.cnt').textContent = `${n} project${n > 1 ? 's' : ''}`; }
+      note.hidden = !tagName;
+      if (tagName) { note.querySelector('b').innerHTML = tagName; note.querySelector('.cnt').textContent = `${n} project${n === 1 ? '' : 's'}`; }
     }
   };
-  filterBtns.forEach(btn => btn.addEventListener('click', () => apply(btn.dataset.filter, null, false)));
-  // counts on the expertise links
+  filterBtns.forEach(btn => btn.addEventListener('click', () => { tag = btn.dataset.filter; tagName = null; apply(false); }));
+  if (q) q.addEventListener('input', () => apply(false));
   document.querySelectorAll('[data-count-tag]').forEach(el => {
     const n = rows.filter(r => tagsOf(r).includes(el.dataset.countTag)).length;
     el.textContent = `${n} project${n > 1 ? 's' : ''}`;
   });
   document.querySelectorAll('a.go[data-tag]').forEach(a => a.addEventListener('click', e => {
     e.preventDefault();
-    lastCard = a.closest('article');
-    apply(a.dataset.tag, a.dataset.name, true);
+    lastCard = a.closest('article'); tag = a.dataset.tag; tagName = a.dataset.name;
+    if (q) q.value = '';
+    apply(true);
     document.getElementById('projects').scrollIntoView({ behavior: reduce ? 'auto' : 'smooth', block: 'start' });
     history.replaceState(null, '', '#projects');
   }));
+  const clearAll = () => { tag = 'all'; tagName = null; if (q) q.value = ''; apply(false); };
+  if (empty) empty.querySelector('.clear-all').addEventListener('click', clearAll);
   if (note) {
-    note.querySelector('.clear').addEventListener('click', () => apply('all', null, false));
+    note.querySelector('.clear').addEventListener('click', clearAll);
     note.querySelector('.back').addEventListener('click', e => {
       e.preventDefault();
       const target = lastCard || document.getElementById('expertise');

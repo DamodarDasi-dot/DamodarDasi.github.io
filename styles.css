@@ -8,6 +8,12 @@
 @font-face{font-family:"IBM Plex Sans";font-style:normal;font-weight:600;font-display:swap;src:url("assets/fonts/IBMPlexSans-SemiBold.woff2") format("woff2")}
 @font-face{font-family:"IBM Plex Mono";font-style:normal;font-weight:400;font-display:swap;src:url("assets/fonts/IBMPlexMono-Regular.woff2") format("woff2")}
 @font-face{font-family:"IBM Plex Mono";font-style:normal;font-weight:500;font-display:swap;src:url("assets/fonts/IBMPlexMono-Medium.woff2") format("woff2")}
+@font-face{font-family:"Inter";font-style:normal;font-weight:400;font-display:swap;src:url("assets/fonts/inter-latin-400-normal.woff2") format("woff2")}
+@font-face{font-family:"Inter";font-style:normal;font-weight:500;font-display:swap;src:url("assets/fonts/inter-latin-500-normal.woff2") format("woff2")}
+@font-face{font-family:"Inter";font-style:normal;font-weight:600;font-display:swap;src:url("assets/fonts/inter-latin-600-normal.woff2") format("woff2")}
+@font-face{font-family:"Manrope";font-style:normal;font-weight:600;font-display:swap;src:url("assets/fonts/manrope-latin-600-normal.woff2") format("woff2")}
+@font-face{font-family:"Manrope";font-style:normal;font-weight:700;font-display:swap;src:url("assets/fonts/manrope-latin-700-normal.woff2") format("woff2")}
+@font-face{font-family:"Manrope";font-style:normal;font-weight:800;font-display:swap;src:url("assets/fonts/manrope-latin-800-normal.woff2") format("woff2")}
 :root{
   --bg:#071018;
   --bg-2:#0B1118;
@@ -647,65 +653,144 @@ body:after{content:"";position:fixed;inset:-50%;z-index:150;pointer-events:none;
 @media(max-width:560px){.exp-photos-row{grid-template-columns:1fr 1fr}}
 
 /* =====================================================================
-   LIGHT THEME — soft off-white, navy text, teal accent.
-   Engineering drawings (animations, GA, P&IDs) keep their dark "screen".
+   DESIGN SYSTEM v3 — "Engineering Command Center"
+   Graphite + Technical Cyan, hybrid dark/light.
+   Rule: page headers, engineering visualisations and contact are DARK
+   (.zone-dark); documents, case studies, skills and lists are LIGHT.
    ===================================================================== */
 :root{
-  --bg:#F6F8FA;--bg-2:#FFFFFF;--panel:#EEF2F6;--panel-2:#E6ECF2;
-  --line:#E2E8EE;--line-2:#CDD6DF;
-  --text:#13293D;--muted:#4F6476;--dim:#7B8C9B;
-  --accent:#0E7C8C;--accent-2:#2D6FA8;--amber:#B45309;
+  /* palette */
+  --graphite:#0B0F14; --graphite-2:#151D27; --graphite-3:#1D2733;
+  --canvas:#F3F6F9; --surface:#FFFFFF; --ink:#182431; --ink-2:#536273; --ink-3:#5F6E7E;
+  --border:#DCE4EC; --border-2:#C9D4DF;
+  --cyan:#38BDF8; --cyan-strong:#0369A1; /* cyan-strong = accessible cyan for text/buttons on light (AA) */
+  --green:#38B48B; --on-dark:#F1F5F9; --on-dark-2:#9FB0C2;
+  /* semantic tokens (light by default) */
+  --bg:var(--canvas); --bg-2:var(--surface); --panel:#EBF0F5; --panel-2:#E3EAF1;
+  --line:var(--border); --line-2:var(--border-2);
+  --text:var(--ink); --muted:var(--ink-2); --dim:var(--ink-3);
+  --accent:var(--cyan-strong); --accent-2:#0284C7; --amber:#B45309;
+  /* type */
+  --sans:"Inter",system-ui,-apple-system,"Segoe UI",Arial,sans-serif;
+  --display:"Manrope","Inter",system-ui,sans-serif;
+  --mono:"IBM Plex Mono",ui-monospace,SFMono-Regular,Menlo,monospace;
+  /* motion */
+  --ease:cubic-bezier(.2,.7,.2,1); --t-fast:200ms; --t-med:260ms; --t-enter:500ms;
+  --radius:4px;
 }
-/* dark drawing screens keep their original tokens */
-.psa,.ga,.pid-wrap,.pid,.aux-dg{--bg:#071018;--bg-2:#0B1118;--panel:#101A24;--panel-2:#14212C;--line:#1E2D3A;--line-2:#2A3D4D;--text:#F1F5F9;--muted:#94A3B8;--dim:#64748B;--accent:#22D3EE;--accent-2:#38BDF8;--amber:#F59E0B}
-.psa,.pid-wrap{border-radius:6px;overflow:hidden;box-shadow:0 18px 40px rgba(19,41,61,.12)}
-.ga{border-radius:6px}
-.pid-wrap{background:#0B1118!important}
-.pid-wrap h3,.pid-wrap .pid-head *{color:#F1F5F9}
-.pid-wrap p,.pid-wrap span{color:#94A3B8}
+.zone-dark,.psa,.ga,.pid-wrap,.pid,.aux-dg{
+  --bg:var(--graphite); --bg-2:var(--graphite-2); --panel:var(--graphite-2); --panel-2:var(--graphite-3);
+  --line:#223040; --line-2:#2C3C4E; --text:var(--on-dark); --muted:var(--on-dark-2); --dim:#6E8194;
+  --accent:var(--cyan); --accent-2:#7DD3FC; --amber:#F59E0B;
+}
+.zone-dark{background:var(--graphite);color:var(--text);box-shadow:0 0 0 100vmax var(--graphite);clip-path:inset(0 -100vmax)}
+body{background:var(--canvas);color:var(--text);font-family:var(--sans)}
+body:before{background-image:linear-gradient(rgba(3,105,161,.045) 1px,transparent 1px),linear-gradient(90deg,rgba(3,105,161,.045) 1px,transparent 1px)!important}
+body:after{opacity:.025}
+h1,h2,h3,.roles,.ld-name{font-family:var(--display)}
+h2{letter-spacing:-.02em}
+.sec-head h2{font-weight:700}
 
-body{background:var(--bg)}
-body:before{background-image:linear-gradient(rgba(45,111,168,.05) 1px,transparent 1px),linear-gradient(90deg,rgba(45,111,168,.05) 1px,transparent 1px)!important}
-.nav{background:rgba(246,248,250,.86)!important;border-bottom:1px solid var(--line)}
-.nav nav a{color:var(--muted)}
-.nav nav a:hover,.nav nav a.active{color:var(--text)}
-.datasheet{background:#fff!important}
+/* nav: compact graphite bar */
+.nav{background:rgba(11,15,20,.92)!important;border-bottom:1px solid #1F2B38}
+.nav .brand span{color:var(--text)}
+
+/* dark zones get a faint cyan blueprint grid */
+.zone-dark{background-image:linear-gradient(rgba(56,189,248,.05) 1px,transparent 1px),linear-gradient(90deg,rgba(56,189,248,.05) 1px,transparent 1px);background-size:48px 48px}
+
+/* buttons */
+.button,.btn{border-radius:var(--radius);transition:border-color var(--t-fast) var(--ease),background var(--t-fast) var(--ease),color var(--t-fast) var(--ease),transform var(--t-fast) var(--ease)}
+:not(.zone-dark) > * .button,.button{background:transparent}
 .button.primary,.btn.primary{background:var(--accent);border-color:var(--accent);color:#fff}
-.button.primary:hover,.btn.primary:hover{background:#0B6774;border-color:#0B6774;color:#fff}
-.button,.btn{background:#fff}
-.button.primary{background:var(--accent)}
+.zone-dark .button.primary{color:#04111A}
+.button.primary:hover{filter:brightness(1.08);transform:translateY(-1px)}
 
-/* cards & panels: white with soft shadow */
-.cards article,.disciplines article,.pillars article,.register a,.award-grid figure,.award-stats>div,.photo-card,.project-gallery figure,.std-table,.resume-card,.about-panel>div,.spec,.channels,.filter-note,.exp-row{background:#fff}
-.disciplines,.pillars,.register,.award-stats,.channels{box-shadow:0 10px 30px rgba(19,41,61,.06)}
-.register-head{background:var(--panel)!important}
-.award-stats .hl{background:linear-gradient(90deg,rgba(14,124,140,.10),rgba(14,124,140,.02))!important}
-.filter-note{background:rgba(14,124,140,.06)!important}
-.register a.flash,.disciplines article.flash{animation:flashL 1.6s ease}
-@keyframes flashL{0%,30%{background:rgba(14,124,140,.12)}100%{background:#fff}}
+/* cards on light: white surface, hairline border, elevation on hover */
+.cards article,.disciplines article,.pillars article,.award-grid figure,.photo-card,.project-gallery figure,.std-table,.resume-card,.about-panel>div,.spec,.channels,.exp-row,.skills>div,.skill-card{background:var(--bg-2)}
+.disciplines,.pillars,.register,.award-stats{box-shadow:0 1px 2px rgba(24,36,49,.04)}
+.disciplines article,.cards article,.award-grid figure{transition:box-shadow var(--t-med) var(--ease),border-color var(--t-med) var(--ease),transform var(--t-med) var(--ease)}
+.disciplines article:hover,.cards article:hover,.award-grid figure:hover{box-shadow:0 10px 28px rgba(24,36,49,.09);position:relative;z-index:1}
+.award-stats .hl{background:linear-gradient(90deg,rgba(3,105,161,.09),rgba(3,105,161,.02))!important}
+.filter-note{background:rgba(3,105,161,.06)!important}
+.register a.flash,.disciplines article.flash{animation:flashV3 1.4s var(--ease)}
+@keyframes flashV3{0%,30%{background:rgba(56,189,248,.14)}100%{background:var(--bg-2)}}
+.portrait{background:#E8EDF2}
 .exp-photos .win{color:#fff}
 
-/* hero */
-.stage-light{background:radial-gradient(ellipse 55% 65% at 75% 40%,#E4EEF6 0%,#EEF3F7 45%,var(--bg) 80%)!important}
-.roles .role span{background:linear-gradient(180deg,#13293D 35%,#3F5E78)!important;-webkit-background-clip:text!important;background-clip:text!important;color:transparent}
-.stage .lede{color:var(--muted)}
-.stage-portrait{background:#fff;box-shadow:0 20px 50px rgba(19,41,61,.14)!important}
-.stage-side{background:#fff!important;box-shadow:0 20px 50px rgba(19,41,61,.10)!important}
-.ticker{background:rgba(255,255,255,.75)!important}
-.ticker span{color:#5A6E80}
-.ticker i{box-shadow:none}
+/* status colours: green = delivered/executed, amber = RFQ only */
+.card-status:before,.st .dot{background:var(--green)}
 
-/* preloader */
-.js:not(.seen) #loader{background:radial-gradient(ellipse 60% 50% at 50% 50%,#FFFFFF,#EAF0F5 75%)!important;color:var(--text)}
-.ld-name b{color:#7B8C9B}
+/* hero (dark) */
+.stage-light{background:radial-gradient(ellipse 55% 60% at 78% 40%,rgba(56,189,248,.10),transparent 70%)!important}
+.roles .role span{background:linear-gradient(180deg,#F8FAFC 30%,#9FB0C2)!important;-webkit-background-clip:text!important;background-clip:text!important;color:transparent}
+.stage-portrait{background:var(--graphite-2);box-shadow:0 24px 60px rgba(0,0,0,.45)!important}
+.stage-side{background:var(--graphite-2)!important;box-shadow:none!important}
+.ticker{background:rgba(11,15,20,.6)!important}
+.ticker span{color:#8FA2B5}
+.ticker i{background:var(--cyan);box-shadow:none}
 
-/* grain lighter on light bg */
-body:after{opacity:.03;mix-blend-mode:multiply}
+/* preloader (dark) */
+.js:not(.seen) #loader{background:var(--graphite)!important;color:var(--on-dark)}
+.ld-name b{color:#6E8194}
 
-/* WhatsApp text stays dark-on-green */
-.wa-fab{box-shadow:0 8px 22px rgba(19,41,61,.18)}
-.channels a.wa b{color:#15803D}
-.portrait{background:#E9EEF3}
-
-.aux-dg{background:#0B1118;border-radius:6px}
+/* drawing screens */
+.psa,.pid-wrap{border-radius:6px;overflow:hidden;box-shadow:0 18px 40px rgba(11,15,20,.18)}
+.pid-wrap{background:var(--graphite-2)!important}
 .pid-wrap .button,.pid-wrap .btn,.psa .button{background:transparent}
+.aux-dg{background:var(--graphite-2);border-radius:6px}
+.zone-dark .psa{box-shadow:0 0 0 1px #223040}
+
+/* reveal motion: 14px / 500ms */
+.js .rv{transform:translateY(14px)!important;transition:opacity var(--t-enter) var(--ease),transform var(--t-enter) var(--ease)!important}
+.js .rv.in{transform:none!important}
+
+/* WhatsApp */
+.wa-fab{box-shadow:0 8px 22px rgba(11,15,20,.25)}
+.channels a.wa b{color:var(--green)}
+:focus-visible{outline:2px solid var(--cyan);outline-offset:3px}
+
+/* metrics strip: 5 cells */
+/* workflow ownership tags */
+.own{display:inline-block;font:500 10px/1 var(--mono);letter-spacing:.06em;text-transform:uppercase;padding:4px 6px;border-radius:3px;margin-bottom:8px}
+.own-o{background:rgba(3,105,161,.10);color:var(--cyan-strong)}
+.own-c{background:rgba(83,98,115,.10);color:var(--ink-2)}
+.own-s{background:rgba(56,180,139,.12);color:#1E7A5C}
+.own-key{display:flex;flex-wrap:wrap;gap:8px 10px;align-items:center;margin:0 0 22px}
+.own-key .own{margin:0}
+.own-key .fine{margin:0 0 0 6px}
+.process li .own{position:relative;z-index:1}
+/* register search */
+.reg-tools{margin:0 0 12px}
+.reg-search{display:flex;align-items:center;gap:10px;max-width:560px;padding:0 14px;border:1px solid var(--line-2);border-radius:var(--radius);background:var(--surface);transition:border-color var(--t-fast)}
+.reg-search:focus-within{border-color:var(--cyan-strong);box-shadow:0 0 0 3px rgba(56,189,248,.18)}
+.reg-search svg{width:16px;height:16px;fill:none;stroke:var(--ink-3);stroke-width:1.6;flex-shrink:0}
+.reg-search input{flex:1;min-width:0;border:0;background:transparent;padding:12px 0;font:400 14.5px var(--sans);color:var(--ink);outline:none}
+.reg-empty{margin:0;padding:28px;border:1px dashed var(--line-2);border-radius:var(--radius);text-align:center;color:var(--muted);background:var(--surface)}
+.reg-empty[hidden]{display:none}
+.reg-empty button{margin-left:8px;font:500 13px var(--sans);color:var(--cyan-strong);background:none;border:0;text-decoration:underline;cursor:pointer}
+.register a{transition:background var(--t-fast) var(--ease)}
+.register a:hover{background:#F7FAFC}
+/* drawing step nav */
+.psa-nav{display:flex;gap:6px;margin-left:auto}
+.psa-nav button{min-width:36px}
+.psa-ctrl{gap:8px}
+.register{background:var(--surface)}
+.register.is-empty{display:none}
+
+/* case-study footer navigation */
+.pnav-head{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:14px}
+.pnav-head a{font:500 13px var(--sans);color:var(--accent)}
+.pnav-pn{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.pnav-pn a,.pnav-rel a{display:flex;flex-direction:column;gap:4px;padding:18px 20px;border:1px solid var(--line);border-radius:var(--radius);background:var(--surface);transition:border-color var(--t-med) var(--ease),box-shadow var(--t-med) var(--ease),transform var(--t-med) var(--ease)}
+.pnav-pn a:hover,.pnav-rel a:hover{border-color:var(--cyan-strong);box-shadow:0 10px 26px rgba(24,36,49,.08);transform:translateY(-2px)}
+.pnav-pn .next{text-align:right;align-items:flex-end}
+.pnav .code{font:500 12px var(--mono);color:var(--accent)}
+.pnav b{font:600 16px/1.35 var(--display);color:var(--text)}
+.pnav-rel{margin-top:22px}
+.pnav-rel>div{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:10px}
+.pnav-rel a span:last-child{font-size:13px;color:var(--muted);line-height:1.45}
+@media(max-width:760px){.pnav-pn,.pnav-rel>div{grid-template-columns:1fr}.pnav-pn .next{text-align:left;align-items:flex-start}}
+.nav.zone-dark{clip-path:none;box-shadow:none}
+@media print{:root{--sans:"IBM Plex Sans",Arial,sans-serif;--display:"IBM Plex Sans",Arial,sans-serif}}
+@media print{.zone-dark{background:none!important;box-shadow:none!important;clip-path:none!important;--bg:#fff;--bg-2:#fff;--text:#111;--muted:#333;--dim:#555;--line:#ddd;--line-2:#ccc;--accent:#0369A1;color:#111}}
+@media(min-width:600px) and (max-width:900px){.stage{grid-template-columns:200px minmax(0,340px)!important}}

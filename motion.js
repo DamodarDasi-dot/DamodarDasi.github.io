@@ -8,7 +8,7 @@
   const ld = document.getElementById('loader');
   if (ld && !html.classList.contains('seen') && !reduce) {
     const num = ld.querySelector('.ld-num span'), bar = ld.querySelector('.ld-bar i');
-    const t0 = performance.now(), MIN = 1500, MAX = 3200;
+    const t0 = performance.now(), MIN = 800, MAX = 2000;
     let loaded = document.readyState === 'complete';
     addEventListener('load', () => { loaded = true; });
     const tick = (t) => {
@@ -63,12 +63,12 @@
 
   // ---- Section reveals ----
   if (!reduce && 'IntersectionObserver' in window) {
-    const targets = document.querySelectorAll('main > section:not(.stage) > *, main > section:not(.stage) .cards > *, .register > a, .exp-row, .award-grid figure, .gallery-grid figure');
+    const targets = document.querySelectorAll('main > section:not(.stage):not(.zone-dark) > *');
     const io = new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } }), { rootMargin: '0px 0px -8% 0px', threshold: .08 });
     targets.forEach((el, k) => {
       const r = el.getBoundingClientRect();
       if (r.top < innerHeight * .9) return;            // already visible: leave as is
-      el.classList.add('rv'); el.style.transitionDelay = `${(k % 4) * 70}ms`; io.observe(el);
+      el.classList.add('rv'); el.style.transitionDelay = `${(k % 3) * 60}ms`; io.observe(el);
     });
   }
 
