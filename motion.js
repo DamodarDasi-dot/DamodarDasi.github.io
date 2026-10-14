@@ -50,9 +50,7 @@
       raf = 0;
       const h = stage.offsetHeight, p = Math.max(0, Math.min(1, scrollY / h));
       const tilt = desk.matches ? mx * 4 : 0, lift = desk.matches ? my * 3 : 0;
-      img.style.transform = `perspective(1200px) translateY(${p * 70}px) scale(${1 + p * .1}) rotateY(${-p * 10 + tilt}deg) rotateX(${lift}deg)`;
-      img.style.filter = `brightness(${1 - p * .45}) contrast(${1 + p * .1})`;
-      light.style.transform = `translate3d(${mx * 18}px, ${p * 40 + my * 12}px, 0)`;
+      light.style.transform = `translate3d(0, ${p * 40}px, 0)`;
       if (copy) { copy.style.transform = `translateY(${-p * 50}px)`; copy.style.opacity = `${1 - p * .7}`; }
     };
     const req = () => { if (!raf) raf = requestAnimationFrame(draw); };
