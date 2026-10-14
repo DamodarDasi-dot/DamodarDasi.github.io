@@ -29,7 +29,7 @@
   } else if (ld) { ld.remove(); }
 
   // ---- Rotating role words ----
-  const roles = [...document.querySelectorAll('.role')];
+  const roles = [...document.querySelectorAll('.roles .role')];
   if (roles.length > 1 && !reduce) {
     let i = 0;
     setInterval(() => {
