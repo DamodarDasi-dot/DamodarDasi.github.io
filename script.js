@@ -1,4 +1,5 @@
 /* Damodar Dasi portfolio — navigation, section tracking, counters, project filters */
+const DD_SERIES = {"names": {"k": "Compressor packages", "n2": "PSA nitrogen systems", "fuel": "Fuel systems", "tanks": "Storage tanks", "skids": "Mechanical & structural skids", "piping": "Piping & integration"}, "series": {"k": ["c01-nyk-n2-compander.html", "c02-xiexing-bog-compressor.html", "c03-banyan-natural-gas-compressor.html", "c04-sichuan-h2o2-package.html", "c05-maoming-air-compressor.html"], "n2": ["psa-nitrogen.html"], "fuel": ["emarat-mfu.html", "f07-maser-demo-pfu.html", "fuel-rfq-portfolio.html"], "tanks": ["emarat-mfu.html", "storage-tank-portfolio.html"], "skids": ["mechanical-skids.html"], "piping": ["c01-nyk-n2-compander.html", "c02-xiexing-bog-compressor.html", "c03-banyan-natural-gas-compressor.html", "c04-sichuan-h2o2-package.html", "c05-maoming-air-compressor.html", "psa-nitrogen.html", "emarat-mfu.html", "f07-maser-demo-pfu.html"]}, "proj": {"c01-nyk-n2-compander.html": {"code": "C-01", "title": "NYK N₂ compander package"}, "c02-xiexing-bog-compressor.html": {"code": "C-02", "title": "Xiexing Rudong BOG compressor"}, "c03-banyan-natural-gas-compressor.html": {"code": "C-03", "title": "Banyan FGB natural gas compressor"}, "c04-sichuan-h2o2-package.html": {"code": "C-04", "title": "Sichuan H₂O₂ compressor &amp; expander"}, "c05-maoming-air-compressor.html": {"code": "C-05", "title": "Maoming air compressor"}, "psa-nitrogen.html": {"code": "P-01", "title": "ONGC PSA nitrogen generator"}, "emarat-mfu.html": {"code": "F-01", "title": "Emarat 40 FT dual-compartment MFU"}, "f07-maser-demo-pfu.html": {"code": "F-07", "title": "Maser demo portable fueling unit"}, "fuel-rfq-portfolio.html": {"code": "F-02–06", "title": "Fuel systems — RFQ designs"}, "storage-tank-portfolio.html": {"code": "S-01", "title": "Storage tank portfolio"}, "mechanical-skids.html": {"code": "S-02", "title": "Mechanical &amp; structural skids"}}};
 (() => {
   const menu = document.querySelector('.menu');
   const nav = document.querySelector('.nav nav');
@@ -83,14 +84,7 @@
     const n = rows.filter(r => tagsOf(r).includes(el.dataset.countTag)).length;
     el.textContent = `${n} project${n > 1 ? 's' : ''}`;
   });
-  document.querySelectorAll('a.go[data-tag]').forEach(a => a.addEventListener('click', e => {
-    e.preventDefault();
-    lastCard = a.closest('article'); tag = a.dataset.tag; tagName = a.dataset.name;
-    if (q) q.value = '';
-    apply(true);
-    document.getElementById('projects').scrollIntoView({ behavior: reduce ? 'auto' : 'smooth', block: 'start' });
-    history.replaceState(null, '', '#projects');
-  }));
+
   const clearAll = () => { tag = 'all'; tagName = null; if (q) q.value = ''; apply(false); };
   if (empty) empty.querySelector('.clear-all').addEventListener('click', clearAll);
   if (note) {
@@ -100,6 +94,36 @@
       const target = lastCard || document.getElementById('expertise');
       target.scrollIntoView({ behavior: reduce ? 'auto' : 'smooth', block: 'center' });
       if (lastCard) { lastCard.classList.remove('flash'); void lastCard.offsetWidth; lastCard.classList.add('flash'); }
+    });
+  }
+
+  // Series walk-through on case-study pages (?series=k → C-01 … C-05 in order)
+  const sp = new URLSearchParams(location.search).get('series');
+  const here = location.pathname.split('/').pop();
+  const list = sp && DD_SERIES.series[sp];
+  const main = document.querySelector('main');
+  if (list && list.includes(here) && main) {
+    const i = list.indexOf(here), n = list.length;
+    const url = f => `${f}?series=${sp}`;
+    const prev = list[i - 1], next = list[i + 1];
+    const dots = list.map((f, k) => `<a href="${url(f)}" class="${k === i ? 'on' : ''}" aria-label="${DD_SERIES.proj[f].code}"${k === i ? ' aria-current="page"' : ''}>${DD_SERIES.proj[f].code}</a>`).join('');
+    const bar = document.createElement('nav');
+    bar.className = 'series-bar'; bar.setAttribute('aria-label', 'Project series');
+    bar.innerHTML = `<div class="sb-in">
+      <div class="sb-t"><span class="label">${DD_SERIES.names[sp]}</span><b>${i + 1} of ${n}</b></div>
+      <div class="sb-dots">${dots}</div>
+      <div class="sb-nav">${prev ? `<a class="sb-btn" href="${url(prev)}">← ${DD_SERIES.proj[prev].code}</a>` : `<a class="sb-btn ghost" href="../index.html#expertise">← Expertise</a>`}${next ? `<a class="sb-btn primary" href="${url(next)}">Next: ${DD_SERIES.proj[next].code} →</a>` : `<a class="sb-btn primary" href="../index.html#projects">All projects →</a>`}</div>
+    </div>`;
+    main.prepend(bar);
+    document.addEventListener('keydown', e => {
+      if (e.target.closest('input,textarea,[contenteditable]') || e.altKey || e.ctrlKey || e.metaKey) return;
+      if (e.key === 'ArrowRight' && next) location.href = url(next);
+      if (e.key === 'ArrowLeft' && prev) location.href = url(prev);
+    });
+    // keep the series when using the page's own previous/next cards if they are in the same series
+    document.querySelectorAll('.pnav a[href]').forEach(a => {
+      const f = a.getAttribute('href').split('/').pop().split('?')[0];
+      if (list.includes(f)) a.setAttribute('href', a.getAttribute('href').split('?')[0] + `?series=${sp}`);
     });
   }
 })();

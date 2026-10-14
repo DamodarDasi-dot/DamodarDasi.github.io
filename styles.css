@@ -854,3 +854,20 @@ button,.button,.btn,.filters button,.psa-ctrl button,.ga-tabs button,.menu{-webk
 .button:active,.btn:active,.button.primary:active,.filters button:active,.psa-ctrl button:active,.ga-tabs button:active,.menu:active,.wa-fab:active,.reg-empty button:active,.filter-note .clear:active{transform:scale(0.97)}
 .pnav-pn a:active,.pnav-rel a:active,.register a:active{transform:scale(0.99)}
 @media (prefers-reduced-motion:reduce){.button:active,.btn:active,.button.primary:active,.filters button:active,.psa-ctrl button:active,.ga-tabs button:active,.menu:active,.wa-fab:active,.pnav-pn a:active,.pnav-rel a:active,.register a:active{transform:none}}
+
+/* series walk-through bar (case studies opened from an expertise card) */
+.series-bar{position:sticky;top:var(--nav-h);z-index:40;background:var(--graphite-2);border-bottom:1px solid #223040;box-shadow:0 0 0 100vmax var(--graphite-2);clip-path:inset(0 -100vmax);color:var(--on-dark)}
+.sb-in{display:flex;align-items:center;gap:18px;max-width:var(--max);margin:0 auto;padding:10px 0}
+.sb-t{display:flex;flex-direction:column;gap:2px;min-width:0}
+.sb-t .label{color:#8496A9;font:500 10.5px/1 var(--mono);letter-spacing:.1em;text-transform:uppercase;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.sb-t b{font:600 14px/1.2 var(--sans)}
+.sb-dots{display:flex;gap:6px;flex-wrap:wrap}
+.sb-dots a{font:500 11px/1 var(--mono);color:#9FB0C2;padding:6px 8px;border:1px solid #2C3C4E;border-radius:3px}
+.sb-dots a.on{background:var(--cyan);border-color:var(--cyan);color:#04111A}
+.sb-nav{display:flex;gap:8px;margin-left:auto}
+.sb-btn{font:600 12px/1 var(--sans);letter-spacing:.04em;text-transform:uppercase;padding:10px 12px;border:1px solid #2C3C4E;border-radius:4px;color:var(--on-dark);white-space:nowrap;transition:transform 160ms var(--ease-out),background-color 160ms var(--ease-out),border-color 160ms var(--ease-out)}
+.sb-btn.primary{background:var(--cyan);border-color:var(--cyan);color:#04111A}
+.sb-btn:active,.sb-dots a:active{transform:scale(0.97)}
+@media (hover:hover) and (pointer:fine){.sb-btn:hover,.sb-dots a:hover{border-color:var(--cyan)}.sb-btn.primary:hover{filter:brightness(1.08)}}
+@media(max-width:760px){.sb-in{flex-wrap:wrap;gap:8px 12px;padding:8px 0}.sb-dots{order:3;width:100%}.sb-dots a{padding:5px 7px}.sb-btn{padding:9px 10px;font-size:11.5px}}
+.sb-in{padding-left:28px;padding-right:28px}@media(max-width:760px){.sb-in{padding-left:18px;padding-right:18px}}
