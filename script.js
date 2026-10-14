@@ -127,3 +127,15 @@ const DD_SERIES = {"names": {"k": "Compressor packages", "n2": "PSA nitrogen sys
     });
   }
 })();
+
+/* v4: back-to-top + earlier roles toggle */
+(() => {
+  const t = document.querySelector('.to-top');
+  if (t) { const f = () => t.classList.toggle('show', scrollY > 900); addEventListener('scroll', f, { passive: true }); f(); }
+  const b = document.querySelector('.exp-more'), e = document.querySelector('.exp');
+  if (b && e) b.addEventListener('click', () => {
+    const o = e.classList.toggle('open');
+    b.setAttribute('aria-expanded', o);
+    b.innerHTML = o ? 'Hide earlier roles <span aria-hidden="true">↑</span>' : 'Show 3 earlier roles <span aria-hidden="true">↓</span>';
+  });
+})();
