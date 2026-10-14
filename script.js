@@ -52,12 +52,42 @@
     counters.forEach(c => io.observe(c));
   }
 
-  // Project register filters
+  // Project register filters + interlink with the expertise cards
   const filterBtns = document.querySelectorAll('.filters button');
-  const rows = document.querySelectorAll('.register a[data-cat]');
-  filterBtns.forEach(btn => btn.addEventListener('click', () => {
-    const f = btn.dataset.filter;
-    filterBtns.forEach(b => b.setAttribute('aria-pressed', String(b === btn)));
-    rows.forEach(r => { r.hidden = !(f === 'all' || r.dataset.cat === f); });
+  const rows = [...document.querySelectorAll('.register a[data-cat]')];
+  const note = document.querySelector('.filter-note');
+  const tagsOf = r => (r.dataset.tags || r.dataset.cat).split(' ');
+  let lastCard = null;
+  const apply = (tag, name, flash) => {
+    let n = 0;
+    rows.forEach(r => { const on = tag === 'all' || tagsOf(r).includes(tag); r.hidden = !on; if (on) n++;
+      r.classList.remove('flash'); if (on && flash) { void r.offsetWidth; r.classList.add('flash'); } });
+    filterBtns.forEach(b => b.setAttribute('aria-pressed', String(b.dataset.filter === tag)));
+    if (note) {
+      note.hidden = !name;
+      if (name) { note.querySelector('b').innerHTML = name; note.querySelector('.cnt').textContent = `${n} project${n > 1 ? 's' : ''}`; }
+    }
+  };
+  filterBtns.forEach(btn => btn.addEventListener('click', () => apply(btn.dataset.filter, null, false)));
+  // counts on the expertise links
+  document.querySelectorAll('[data-count-tag]').forEach(el => {
+    const n = rows.filter(r => tagsOf(r).includes(el.dataset.countTag)).length;
+    el.textContent = `${n} project${n > 1 ? 's' : ''}`;
+  });
+  document.querySelectorAll('a.go[data-tag]').forEach(a => a.addEventListener('click', e => {
+    e.preventDefault();
+    lastCard = a.closest('article');
+    apply(a.dataset.tag, a.dataset.name, true);
+    document.getElementById('projects').scrollIntoView({ behavior: reduce ? 'auto' : 'smooth', block: 'start' });
+    history.replaceState(null, '', '#projects');
   }));
+  if (note) {
+    note.querySelector('.clear').addEventListener('click', () => apply('all', null, false));
+    note.querySelector('.back').addEventListener('click', e => {
+      e.preventDefault();
+      const target = lastCard || document.getElementById('expertise');
+      target.scrollIntoView({ behavior: reduce ? 'auto' : 'smooth', block: 'center' });
+      if (lastCard) { lastCard.classList.remove('flash'); void lastCard.offsetWidth; lastCard.classList.add('flash'); }
+    });
+  }
 })();
