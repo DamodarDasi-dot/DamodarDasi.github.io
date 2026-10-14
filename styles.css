@@ -511,11 +511,12 @@ main>.hero:not(.hero-home){display:block}
 @keyframes cue{to{top:100%}}
 .principles{padding-top:72px}
 @media(max-width:900px){
-  .stage{display:block;padding:0 18px}
-  .stage-portrait{position:relative;right:auto;top:auto;transform:none;width:min(62%,280px);margin:28px 0 30px}
-  .stage-copy{max-width:none}
-  .stage-copy{padding:0 0 84px}
-  .stage-side{display:none}
+  .stage{display:grid;grid-template-columns:min(53%,280px) minmax(0,1fr);column-gap:16px;align-items:end;padding:0 18px}
+  .stage-portrait{grid-column:1;grid-row:1;position:relative;right:auto;top:auto;transform:none;width:100%;max-width:280px;margin:28px 0 30px}
+  .stage-side{display:flex;position:static;grid-column:2;grid-row:1;align-items:flex-start;gap:9px;margin:0 0 32px;font-size:10px;letter-spacing:.04em;line-height:1.35;white-space:nowrap}
+  .stage-side span{padding-left:10px;border-left:1px solid var(--line-2)}
+  .stage-side span:first-child{border-left-color:var(--accent)}
+  .stage-copy{grid-column:1/-1;grid-row:2;max-width:none;padding:0 0 84px}
   .roles{font-size:clamp(28px,8.8vw,60px)}
 }
 
