@@ -503,19 +503,32 @@ main>.hero:not(.hero-home){display:block}
 .stage .lede{margin:26px 0 0;max-width:46ch;color:#AEB9C6;font-size:16.5px;line-height:1.7}
 .stage .buttons{margin-top:30px}
 .stage .hero-facts{margin-top:30px}
-.stage-side{position:absolute;right:max(28px,calc((100vw - var(--max))/2 + 28px));top:40px;display:flex;flex-direction:column;align-items:flex-end;gap:6px;font:500 11px/1.4 var(--mono);letter-spacing:.08em;color:var(--muted);text-transform:uppercase}
-.stage-side span:first-child{color:var(--accent)}
+.stage-side{position:absolute;right:max(28px,calc((100vw - var(--max))/2 + 28px));top:34px;display:flex;flex-direction:column;align-items:flex-end;gap:12px;text-align:right}
+.stage-side div{display:flex;flex-direction:column;gap:3px}
+.stage-side .label{font:500 10.5px/1 var(--mono);letter-spacing:.12em;text-transform:uppercase;color:var(--dim)}
+.stage-side b{font-weight:500;font-size:14px;color:var(--text)}
+.stage .hero-facts{grid-template-columns:repeat(4,auto)}
+.stage .hero-facts b{font-family:var(--mono);font-size:13px;letter-spacing:.02em}
+.stage .hero-facts div:first-child b{color:var(--accent)}
 .scroll-cue{position:absolute;left:max(28px,calc((100vw - var(--max))/2 + 28px));bottom:26px;display:flex;align-items:center;gap:12px;font:500 11px/1 var(--mono);letter-spacing:.14em;text-transform:uppercase;color:var(--muted)}
 .scroll-cue i{position:relative;width:1px;height:38px;background:var(--line-2);overflow:hidden}
 .scroll-cue i:after{content:"";position:absolute;left:0;top:-40%;width:1px;height:40%;background:var(--accent);animation:cue 2.2s cubic-bezier(.6,0,.3,1) infinite}
 @keyframes cue{to{top:100%}}
 .principles{padding-top:72px}
+/* desktop: right column = facts on top, photo below */
+@media(min-width:901px){
+  .stage{display:grid;grid-template-columns:minmax(0,1fr) min(380px,30vw);grid-template-rows:auto auto;column-gap:56px;row-gap:22px;align-content:center;padding-top:36px;padding-bottom:64px}
+  .stage-copy{grid-column:1;grid-row:1/span 2;align-self:center;max-width:640px;padding:0}
+  .stage-side{position:static;grid-column:2;grid-row:1;align-self:end;align-items:flex-end}
+  .stage-portrait{position:static;grid-column:2;grid-row:2;align-self:start;transform:none;width:100%}
+}
 @media(max-width:900px){
   .stage{display:grid;grid-template-columns:min(53%,280px) minmax(0,1fr);column-gap:16px;align-items:end;padding:0 18px}
   .stage-portrait{grid-column:1;grid-row:1;position:relative;right:auto;top:auto;transform:none;width:100%;max-width:280px;margin:28px 0 30px}
-  .stage-side{display:flex;position:static;grid-column:2;grid-row:1;align-items:flex-start;gap:9px;margin:0 0 32px;font-size:10px;letter-spacing:.04em;line-height:1.35;white-space:nowrap}
-  .stage-side span{padding-left:10px;border-left:1px solid var(--line-2)}
-  .stage-side span:first-child{border-left-color:var(--accent)}
+  .stage-side{display:flex;position:static;grid-column:2;grid-row:1;align-items:flex-start;text-align:left;gap:12px;margin:0 0 32px}
+  .stage-side b{font-size:13px;line-height:1.35}
+  .stage .hero-facts{grid-template-columns:repeat(2,auto)}
+  .stage-side div{padding-left:10px;border-left:1px solid var(--line-2)}
   .stage-copy{grid-column:1/-1;grid-row:2;max-width:none;padding:0 0 84px}
   .roles{font-size:clamp(28px,8.8vw,60px)}
 }
