@@ -680,7 +680,7 @@ body:after{content:"";position:fixed;inset:-50%;z-index:150;pointer-events:none;
 }
 .zone-dark,.psa,.ga,.pid-wrap,.pid,.aux-dg{
   --bg:var(--graphite); --bg-2:var(--graphite-2); --panel:var(--graphite-2); --panel-2:var(--graphite-3);
-  --line:#223040; --line-2:#2C3C4E; --text:var(--on-dark); --muted:var(--on-dark-2); --dim:#6E8194;
+  --line:#223040; --line-2:#2C3C4E; --text:var(--on-dark); --muted:var(--on-dark-2); --dim:#8496A9;
   --accent:var(--cyan); --accent-2:#7DD3FC; --amber:#F59E0B;
 }
 .zone-dark{background:var(--graphite);color:var(--text);box-shadow:0 0 0 100vmax var(--graphite);clip-path:inset(0 -100vmax)}
