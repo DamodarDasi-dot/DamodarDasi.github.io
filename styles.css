@@ -600,6 +600,16 @@ body:after{content:"";position:fixed;inset:-50%;z-index:150;pointer-events:none;
 .pillars h3{margin:12px 0 8px;font-size:18px;font-weight:600}
 .pillars p{margin:0;color:var(--muted);font-size:14.5px;line-height:1.65}
 @media(max-width:900px){.pillars{grid-template-columns:1fr}.pillars article+article{border-left:0;border-top:1px solid var(--line-2)}}
+/* ---- skills ticker ---- */
+.stage{padding-bottom:110px!important}
+.ticker{position:absolute;left:0;right:0;bottom:0;overflow:hidden;border-top:1px solid var(--line);border-bottom:1px solid var(--line);background:rgba(5,10,15,.6);-webkit-mask-image:linear-gradient(90deg,transparent,#000 6%,#000 94%,transparent);mask-image:linear-gradient(90deg,transparent,#000 6%,#000 94%,transparent)}
+.ticker-track{display:flex;width:max-content;animation:ticker 48s linear infinite}
+.ticker:hover .ticker-track{animation-play-state:paused}
+.ticker-set{display:flex;align-items:center;flex-shrink:0}
+.ticker span{padding:18px 26px;font:500 13px/1 var(--sans);letter-spacing:.08em;text-transform:uppercase;color:#8C9AA8;white-space:nowrap}
+.ticker i{width:5px;height:5px;border-radius:50%;background:var(--accent);box-shadow:0 0 8px rgba(34,211,238,.7);flex-shrink:0}
+@keyframes ticker{to{transform:translateX(-50%)}}
+@media(max-width:900px){.stage{padding-bottom:70px!important}.ticker span{padding:14px 18px;font-size:11.5px}}
 @media (prefers-reduced-motion:reduce){#loader,.cur,body:after{display:none!important}.js .rv{opacity:1;transform:none}.role{transition:none}}
 @media (prefers-reduced-motion:reduce){
   html{scroll-behavior:auto}
