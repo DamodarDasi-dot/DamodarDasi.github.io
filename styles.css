@@ -915,3 +915,61 @@ button,.button,.btn,.filters button,.psa-ctrl button,.ga-tabs button,.menu{-webk
   .exp-more{display:flex;align-items:center;justify-content:center;gap:8px;width:100%;margin:14px 0 6px;padding:13px 16px;background:var(--surface,#fff);border:1px solid var(--border);border-radius:8px;font:600 14px/1 var(--sans);color:var(--ink);cursor:pointer;transition:transform .16s var(--ease-out)}
   .exp-more:active{transform:scale(.97)}
 }
+
+/* ===== v4 · interactive workflow ===== */
+.wf{margin-top:6px}
+.wf-rail{position:relative;display:grid;grid-template-columns:repeat(9,minmax(0,1fr));padding:4px 0 2px}
+.wf-node{position:relative;display:flex;flex-direction:column;align-items:center;gap:10px;padding:4px 4px 6px;background:none;border:0;font:inherit;color:var(--ink-2);cursor:pointer;-webkit-tap-highlight-color:transparent}
+.wf-node::before{content:"";position:absolute;top:22px;right:50%;width:100%;height:2px;background:var(--border);transition:background-color .35s ease}
+.wf-node:first-child::before{display:none}
+.wf-node.done::before,.wf-node[aria-selected=true]::before{background:var(--cyan-strong)}
+.wf-dot{position:relative;z-index:1;width:36px;height:36px;display:grid;place-items:center;border-radius:50%;background:var(--surface,#fff);border:1.5px solid var(--border);font:500 11px/1 var(--mono);color:var(--ink-3);transition:background-color .25s ease,border-color .25s ease,color .25s ease,transform .25s var(--ease-out),box-shadow .25s ease}
+.wf-node.done .wf-dot{border-color:var(--cyan-strong);color:var(--cyan-strong)}
+.wf-node[aria-selected=true] .wf-dot{background:var(--cyan-strong);border-color:var(--cyan-strong);color:#fff;transform:scale(1.12);box-shadow:0 0 0 6px rgba(3,105,161,.12)}
+.wf-name{font-size:12.5px;font-weight:600;line-height:1.25;text-align:center;color:var(--ink-2);transition:color .2s ease}
+.wf-node[aria-selected=true] .wf-name{color:var(--ink)}
+.wf-node:focus-visible{outline:none}
+.wf-node:focus-visible .wf-dot{outline:2px solid var(--cyan-strong);outline-offset:3px}
+@media (hover:hover) and (pointer:fine){.wf-node:hover .wf-dot{border-color:var(--cyan-strong);color:var(--cyan-strong)}.wf-node[aria-selected=true]:hover .wf-dot{color:#fff}}
+.wf.playing .wf-node[aria-selected=true]::before{background:repeating-linear-gradient(90deg,var(--cyan-strong) 0 6px,transparent 6px 11px);background-size:11px 2px;animation:wfFlow .6s linear infinite}
+@keyframes wfFlow{to{background-position:11px 0}}
+.wf-panels{margin-top:22px}
+.wf-panel{position:relative;overflow:hidden;display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.25fr);grid-template-areas:"top facts" "h facts" "lead facts" "ex facts";align-content:start;gap:8px 44px;padding:26px 28px;margin-bottom:14px;background:var(--surface,#fff);border:1px solid var(--border);border-radius:10px;box-shadow:0 1px 2px rgba(24,36,49,.04)}
+.js .wf-panel{display:none;margin-bottom:0}
+.js .wf-panel.on{display:grid;animation:wfIn .28s var(--ease-out)}
+@keyframes wfIn{from{opacity:0;transform:translateY(8px)}}
+.wf-top{grid-area:top;display:flex;flex-wrap:wrap;align-items:center;gap:10px}
+.wf-top .own{margin:0}
+.wf-step{font:500 11px/1 var(--mono);letter-spacing:.06em;color:var(--ink-3)}
+.wf-panel h3{grid-area:h;margin:6px 0 0;font-size:24px;font-weight:600;letter-spacing:-.015em}
+.wf-lead{grid-area:lead;margin:0;color:var(--ink-2);font-size:15.5px;line-height:1.55}
+.wf-facts{grid-area:facts;margin:0;display:grid;gap:16px;align-content:start;padding-left:28px;border-left:1px solid var(--border)}
+.wf-facts dt{font:500 10.5px/1 var(--mono);letter-spacing:.08em;text-transform:uppercase;color:var(--ink-3)}
+.wf-facts dd{margin:6px 0 0;color:var(--ink);font-size:14.5px;line-height:1.55}
+.wf-ex{grid-area:ex;align-self:end;display:grid;grid-template-columns:1fr auto;gap:4px 12px;margin-top:14px;padding:12px 14px;background:var(--canvas);border:1px solid var(--border);border-radius:8px;color:var(--ink);font-size:13.5px;line-height:1.45;text-decoration:none;transition:border-color .2s ease}
+.wf-ex .label{grid-column:1/-1;font:500 10px/1 var(--mono);letter-spacing:.08em;text-transform:uppercase;color:var(--cyan-strong)}
+.wf-ex .arr{align-self:center;color:var(--cyan-strong);transition:transform .2s var(--ease-out)}
+@media (hover:hover) and (pointer:fine){.wf-ex:hover{border-color:var(--cyan-strong)}.wf-ex:hover .arr{transform:translateX(3px)}}
+.wf.tick .wf-panel.on::after{content:"";position:absolute;left:0;right:0;bottom:0;height:2px;background:var(--cyan-strong);transform-origin:left;animation:wfTick 5s linear forwards}
+@keyframes wfTick{from{transform:scaleX(0)}to{transform:scaleX(1)}}
+.wf-ctrl{display:none}
+.js .wf-ctrl{display:flex;justify-content:center;gap:10px;margin-top:16px}
+.wf-btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;height:42px;min-width:42px;padding:0 16px;background:var(--surface,#fff);border:1px solid var(--border);border-radius:999px;font:600 13px/1 var(--sans);color:var(--ink);cursor:pointer;touch-action:manipulation;transition:transform .16s var(--ease-out),border-color .2s ease,background-color .2s ease,color .2s ease}
+.wf-btn:active{transform:scale(.97)}
+.wf-play[aria-pressed=true]{background:var(--ink);border-color:var(--ink);color:#fff}
+.wf-play .ic{font-size:10px}
+@media (hover:hover) and (pointer:fine){.wf-btn:hover{border-color:var(--cyan-strong)}}
+@media (max-width:960px){
+  .wf-panel{grid-template-columns:1fr;grid-template-areas:"top" "h" "lead" "facts" "ex";gap:8px}
+  .wf-facts{padding:14px 0 0;margin-top:6px;border-left:0;border-top:1px solid var(--border);gap:12px}
+}
+@media (max-width:760px){
+  .wf-rail{display:flex;overflow-x:auto;scroll-snap-type:x proximity;scrollbar-width:none;margin:0 -4px;padding:4px 4px 2px}
+  .wf-rail::-webkit-scrollbar{display:none}
+  .wf-node{flex:0 0 84px;scroll-snap-align:center}
+  .wf-name{font-size:12px}
+  .wf-panel{padding:20px 18px}
+  .wf-panel h3{font-size:21px}
+  .wf-lead{font-size:15px}
+}
+@media (prefers-reduced-motion:reduce){.js .wf-panel.on{animation:none}.wf.playing .wf-node[aria-selected=true]::before{animation:none}}

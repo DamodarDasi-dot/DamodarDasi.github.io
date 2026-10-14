@@ -139,3 +139,45 @@ const DD_SERIES = {"names": {"k": "Compressor packages", "n2": "PSA nitrogen sys
     b.innerHTML = o ? 'Hide earlier roles <span aria-hidden="true">↑</span>' : 'Show 3 earlier roles <span aria-hidden="true">↓</span>';
   });
 })();
+
+/* v4: interactive workflow */
+(() => {
+  const w = document.querySelector('[data-wf]'); if (!w) return;
+  const tabs = [...w.querySelectorAll('.wf-node')], panels = [...w.querySelectorAll('.wf-panel')];
+  const rail = w.querySelector('.wf-rail'), play = w.querySelector('[data-wf-play]');
+  const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches, DUR = 5000, N = tabs.length;
+  let i = 0, timer = null, touched = false;
+  const restartTick = () => { w.classList.remove('tick'); void w.offsetWidth; w.classList.add('tick'); };
+  function go(n, focus) {
+    i = (n + N) % N;
+    tabs.forEach((t, k) => { const on = k === i; t.setAttribute('aria-selected', on); t.tabIndex = on ? 0 : -1; t.classList.toggle('done', k < i); });
+    panels.forEach((p, k) => p.classList.toggle('on', k === i));
+    if (focus) tabs[i].focus({ preventScroll: true });
+    if (rail.scrollWidth > rail.clientWidth + 2) { const t = tabs[i]; rail.scrollTo({ left: t.offsetLeft - rail.clientWidth / 2 + t.offsetWidth / 2, behavior: reduce ? 'auto' : 'smooth' }); }
+    if (timer) restartTick();
+  }
+  function setBtn(on) { play.setAttribute('aria-pressed', on); play.querySelector('.ic').textContent = on ? '❚❚' : '▶'; play.querySelector('.tx').textContent = on ? 'Pause' : (i === N - 1 ? 'Replay the workflow' : 'Play the workflow'); }
+  function stop() { clearInterval(timer); timer = null; w.classList.remove('playing', 'tick'); setBtn(false); }
+  function start() {
+    if (i === N - 1) go(0);
+    timer = setInterval(() => { if (i >= N - 1) { stop(); return; } go(i + 1); if (i === N - 1) setTimeout(() => { if (timer) stop(); }, DUR); }, DUR);
+    w.classList.add('playing'); restartTick(); setBtn(true);
+  }
+  const user = fn => (...a) => { touched = true; fn(...a); };
+  play.addEventListener('click', user(() => timer ? stop() : start()));
+  w.querySelector('[data-wf-prev]').addEventListener('click', user(() => { stop(); go(i - 1); }));
+  w.querySelector('[data-wf-next]').addEventListener('click', user(() => { stop(); go(i + 1); }));
+  tabs.forEach((t, k) => t.addEventListener('click', user(() => { stop(); go(k); })));
+  rail.addEventListener('keydown', user(e => {
+    const m = { ArrowRight: i + 1, ArrowLeft: i - 1, Home: 0, End: N - 1 }[e.key];
+    if (m === undefined) return; e.preventDefault(); stop(); go(m, true);
+  }));
+  let x0 = null; const box = w.querySelector('.wf-panels');
+  box.addEventListener('touchstart', e => { x0 = e.touches[0].clientX; }, { passive: true });
+  box.addEventListener('touchend', e => { if (x0 === null) return; const dx = e.changedTouches[0].clientX - x0; x0 = null; if (Math.abs(dx) > 50) { touched = true; stop(); go(i + (dx < 0 ? 1 : -1)); } }, { passive: true });
+  go(0);
+  if (!reduce && 'IntersectionObserver' in window) {
+    const io = new IntersectionObserver(es => { if (es[0].isIntersecting) { io.disconnect(); if (!touched) start(); } }, { threshold: 0.5 });
+    io.observe(w);
+  }
+})();
