@@ -1139,3 +1139,72 @@ button,.button,.btn,.filters button,.psa-ctrl button,.ga-tabs button,.menu{-webk
   .sp-val{order:1}.sp-sub{order:2}.sp-viz{order:3;margin-top:18px}.sp-desc{order:4}.sp-cta{order:5;align-self:flex-start}
 }
 @media (max-width:760px){.sp-gauge{width:200px;align-self:flex-start}}
+
+/* ===== v5 · compact spacing (whole site) ===== */
+main > .section{padding-top:72px;padding-bottom:72px}
+.sec-head{margin-bottom:32px}
+.sec-head h2{font-size:clamp(26px,3vw,34px)}
+.sec-head p{margin-top:10px}
+.spec .portrait{display:none}
+.about-copy p{font-size:16.5px;line-height:1.7;margin-bottom:16px}
+.about-copy p:first-child{font-size:19px;line-height:1.55}
+.disciplines article{padding:22px 22px 24px;min-height:0}
+.disciplines .sym{margin-bottom:16px}
+.disciplines p{font-size:14px;line-height:1.6}
+.disciplines .refs{padding-top:14px}
+.register-head,.register a{grid-template-columns:112px minmax(0,2.2fr) minmax(0,1.5fr) minmax(0,1.2fr) 28px}
+.register a{padding-top:14px;padding-bottom:14px}
+.rthumb{width:100px}
+.reg-group{padding-top:12px;padding-bottom:8px}
+.pillars{margin-bottom:20px}
+.pillars article{padding:18px 20px}
+.pillars h3{margin:10px 0 6px;font-size:17px}
+.pillars p{font-size:14px;line-height:1.6}
+.wf-panels{margin-top:16px}
+.wf-panel{padding:22px 24px}
+.exp-row{padding:24px 0;gap:28px}
+.exp-row li{margin-bottom:6px;font-size:14px;line-height:1.55}
+.awards{margin-top:36px;padding-top:28px}
+.award-grid{margin-top:14px}
+.award-grid figcaption{padding:8px 10px}
+.skills{gap:14px}
+.skill-block{padding:20px}
+.skill-block h3{margin-bottom:12px}
+.tool{padding:8px 0;font-size:14px}
+.resume-band{padding:32px;gap:32px}
+.resume-band .buttons{margin-top:18px}
+.contact-grid{gap:40px}
+.contact-grid h2{font-size:clamp(26px,3vw,38px)}
+.contact-grid>div>p{font-size:16px;margin-top:14px}
+.channels a{padding:15px 20px}
+@media (max-width:960px){.register a{grid-template-columns:96px 1fr 24px}.rthumb{width:90px}}
+@media (max-width:620px){
+  main > .section{padding-top:48px;padding-bottom:48px}
+  .stage{padding-bottom:36px}
+  .sec-head{margin-bottom:20px;gap:10px}
+  .sec-head h2{font-size:26px}
+  .about-copy p{font-size:15.5px;line-height:1.65;margin-bottom:14px}
+  .about-copy p:first-child{font-size:17.5px}
+  .register a{grid-template-columns:76px 1fr 18px;padding:12px 14px;row-gap:6px}
+  .rthumb{width:76px}
+  .register h3{font-size:16px}
+  .register .sub{font-size:13px;line-height:1.45}
+  .register .data{font-size:11.5px;line-height:1.5}
+  .exp-row{padding:18px 0;gap:8px}
+  .awards{margin-top:28px;padding-top:22px}
+  .award-grid{grid-template-columns:1fr 1fr;gap:10px}
+  .award-grid strong{font-size:13px}
+  .awards-head p{font-size:14px}
+  .skill-block{padding:16px}
+  .chips span{padding:5px 8px;font-size:12px}
+  .resume-band{padding:20px;gap:20px}
+  .resume-band h3{font-size:21px}
+  .edu{gap:10px}
+  .contact-grid{gap:22px}
+  .contact-grid h2{font-size:24px}
+  .contact-grid>div>p{font-size:15px}
+  .channels a{padding:13px 16px}
+  .wf-panel{padding:18px 16px}
+  .sp-slide{padding:18px 18px 24px}
+}
+@media (min-width:961px){#principles figure{max-width:920px;margin:0 auto!important}}
