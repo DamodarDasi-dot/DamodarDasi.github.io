@@ -563,6 +563,13 @@ body:after{content:"";position:fixed;inset:-50%;z-index:150;pointer-events:none;
 .register a.flash,.disciplines article.flash{animation:flash 1.6s ease}
 @keyframes flash{0%,30%{background:rgba(34,211,238,.14)}100%{background:transparent}}
 @media(max-width:600px){.filter-note .back{margin-left:0}}
+.pillars{display:grid;grid-template-columns:repeat(3,1fr);gap:0;border:1px solid var(--line-2);margin-bottom:28px}
+.pillars article{padding:22px 22px 24px;background:var(--bg-2)}
+.pillars article+article{border-left:1px solid var(--line-2)}
+.pillars .num{font:500 11px/1 var(--mono);letter-spacing:.12em;color:var(--accent)}
+.pillars h3{margin:12px 0 8px;font-size:18px;font-weight:600}
+.pillars p{margin:0;color:var(--muted);font-size:14.5px;line-height:1.65}
+@media(max-width:900px){.pillars{grid-template-columns:1fr}.pillars article+article{border-left:0;border-top:1px solid var(--line-2)}}
 @media (prefers-reduced-motion:reduce){#loader,.cur,body:after{display:none!important}.js .rv{opacity:1;transform:none}.role{transition:none}}
 @media (prefers-reduced-motion:reduce){
   html{scroll-behavior:auto}
