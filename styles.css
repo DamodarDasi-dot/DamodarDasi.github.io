@@ -950,7 +950,7 @@ button,.button,.btn,.filters button,.psa-ctrl button,.ga-tabs button,.menu{-webk
 .wf-ex .label{grid-column:1/-1;font:500 10px/1 var(--mono);letter-spacing:.08em;text-transform:uppercase;color:var(--cyan-strong)}
 .wf-ex .arr{align-self:center;color:var(--cyan-strong);transition:transform .2s var(--ease-out)}
 @media (hover:hover) and (pointer:fine){.wf-ex:hover{border-color:var(--cyan-strong)}.wf-ex:hover .arr{transform:translateX(3px)}}
-.wf.tick .wf-panel.on::after{content:"";position:absolute;left:0;right:0;bottom:0;height:2px;background:var(--cyan-strong);transform-origin:left;animation:wfTick 5s linear forwards}
+.wf.tick .wf-panel.on::after{content:"";position:absolute;left:0;right:0;bottom:0;height:2px;background:var(--cyan-strong);transform-origin:left;animation:wfTick var(--wf-dur,8s) linear forwards}
 @keyframes wfTick{from{transform:scaleX(0)}to{transform:scaleX(1)}}
 .wf-ctrl{display:none}
 .js .wf-ctrl{display:flex;justify-content:center;gap:10px;margin-top:16px}
@@ -981,3 +981,7 @@ button,.button,.btn,.filters button,.psa-ctrl button,.ga-tabs button,.menu{-webk
 .reg-group .n{font-weight:500;letter-spacing:.04em;text-transform:none;color:var(--ink-3)}
 .reg-group[hidden]{display:none}
 @media (max-width:620px){.reg-group{padding:12px 16px 9px;font-size:11.5px}}
+
+.wf-count{display:inline-flex;align-items:center;min-width:72px;justify-content:center;font:500 12px/1 var(--mono);letter-spacing:.06em;color:var(--ink-3)}
+.wf-count b{color:var(--ink);font-weight:600;margin-right:4px}
+.wf-ctrl{align-items:center}
