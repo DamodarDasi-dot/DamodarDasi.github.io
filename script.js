@@ -71,6 +71,7 @@ const DD_SERIES = {"names": {"k": "Compressor packages", "n2": "PSA nitrogen sys
       r.classList.remove('flash'); if (on && flash) { void r.offsetWidth; r.classList.add('flash'); }
     });
     filterBtns.forEach(b => b.setAttribute('aria-pressed', String(b.dataset.filter === tag)));
+    document.querySelectorAll('.reg-group').forEach(g => { g.hidden = !rows.some(r => !r.hidden && r.dataset.cat === g.dataset.group); });
     if (empty) empty.hidden = n > 0;
     document.querySelector('.register')?.classList.toggle('is-empty', n === 0);
     if (note) {
@@ -78,7 +79,7 @@ const DD_SERIES = {"names": {"k": "Compressor packages", "n2": "PSA nitrogen sys
       if (tagName) { note.querySelector('b').innerHTML = tagName; note.querySelector('.cnt').textContent = `${n} project${n === 1 ? '' : 's'}`; }
     }
   };
-  filterBtns.forEach(btn => btn.addEventListener('click', () => { tag = btn.dataset.filter; tagName = null; apply(false); }));
+  filterBtns.forEach(btn => btn.addEventListener('click', () => { tag = tag === btn.dataset.filter ? 'all' : btn.dataset.filter; tagName = null; apply(false); }));
   if (q) q.addEventListener('input', () => apply(false));
   document.querySelectorAll('[data-count-tag]').forEach(el => {
     const n = rows.filter(r => tagsOf(r).includes(el.dataset.countTag)).length;
