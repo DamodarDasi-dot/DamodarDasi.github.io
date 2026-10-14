@@ -147,7 +147,7 @@ const DD_SERIES = {"names": {"k": "Compressor packages", "n2": "PSA nitrogen sys
   const tabs = [...w.querySelectorAll('.wf-node')], panels = [...w.querySelectorAll('.wf-panel')];
   const rail = w.querySelector('.wf-rail'), count = w.querySelector('.wf-count b');
   const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
-  const STEP = 8000, HOLD = 15000, N = tabs.length;
+  const STEP = 8000, HOLD = 6000, N = tabs.length;
   let i = 0, t = null, visible = false, held = false;
   w.style.setProperty('--wf-step', STEP + 'ms');
   const tick = ms => { w.style.setProperty('--wf-dur', ms + 'ms'); w.classList.remove('tick'); void w.offsetWidth; w.classList.add('tick'); };
