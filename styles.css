@@ -603,7 +603,7 @@ body:after{content:"";position:fixed;inset:-50%;z-index:150;pointer-events:none;
 /* ---- skills ticker ---- */
 .stage{padding-bottom:110px!important}
 .ticker{position:absolute;left:0;right:0;bottom:0;overflow:hidden;border-top:1px solid var(--line);border-bottom:1px solid var(--line);background:rgba(5,10,15,.6);-webkit-mask-image:linear-gradient(90deg,transparent,#000 6%,#000 94%,transparent);mask-image:linear-gradient(90deg,transparent,#000 6%,#000 94%,transparent)}
-.ticker-track{display:flex;width:max-content;animation:ticker 48s linear infinite}
+.ticker-track{display:flex;width:max-content;animation:ticker 70s linear infinite}
 .ticker:hover .ticker-track{animation-play-state:paused}
 .ticker-set{display:flex;align-items:center;flex-shrink:0}
 .ticker span{padding:18px 26px;font:500 13px/1 var(--sans);letter-spacing:.08em;text-transform:uppercase;color:#8C9AA8;white-space:nowrap}
