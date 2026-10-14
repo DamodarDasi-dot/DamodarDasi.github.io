@@ -190,3 +190,12 @@ const DD_SERIES = {"names": {"k": "Compressor packages", "n2": "PSA nitrogen sys
     new IntersectionObserver(es => { visible = es[0].isIntersecting; schedule(STEP); }, { threshold: 0.35 }).observe(w);
   }
 })();
+
+/* v4: metrics visuals start when the strip is on screen */
+(() => {
+  const m = document.querySelector('.metrics-strip'); if (!m) return;
+  const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if (reduce || !('IntersectionObserver' in window)) { m.classList.add('in'); return; }
+  const io = new IntersectionObserver(es => { if (es[0].isIntersecting) { m.classList.add('in'); io.disconnect(); } }, { threshold: 0.25 });
+  io.observe(m);
+})();
