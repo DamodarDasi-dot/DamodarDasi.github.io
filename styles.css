@@ -507,9 +507,9 @@ main>.hero:not(.hero-home){display:block}
 .stage-side div{display:flex;flex-direction:column;gap:3px}
 .stage-side .label{font:500 10.5px/1 var(--mono);letter-spacing:.12em;text-transform:uppercase;color:var(--dim)}
 .stage-side b{font-weight:500;font-size:14px;color:var(--text)}
-.stage .hero-facts{grid-template-columns:repeat(4,auto)}
+.stage .hero-facts{grid-template-columns:repeat(3,auto)}
 .stage .hero-facts b{font-family:var(--mono);font-size:13px;letter-spacing:.02em}
-.stage .hero-facts div:first-child b{color:var(--accent)}
+.stage-side .side-exp b{color:var(--accent)}
 .scroll-cue{position:absolute;left:max(28px,calc((100vw - var(--max))/2 + 28px));bottom:26px;display:flex;align-items:center;gap:12px;font:500 11px/1 var(--mono);letter-spacing:.14em;text-transform:uppercase;color:var(--muted)}
 .scroll-cue i{position:relative;width:1px;height:38px;background:var(--line-2);overflow:hidden}
 .scroll-cue i:after{content:"";position:absolute;left:0;top:-40%;width:1px;height:40%;background:var(--accent);animation:cue 2.2s cubic-bezier(.6,0,.3,1) infinite}
