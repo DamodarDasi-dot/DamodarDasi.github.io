@@ -985,3 +985,6 @@ button,.button,.btn,.filters button,.psa-ctrl button,.ga-tabs button,.menu{-webk
 .wf-count{display:inline-flex;align-items:center;min-width:72px;justify-content:center;font:500 12px/1 var(--mono);letter-spacing:.06em;color:var(--ink-3)}
 .wf-count b{color:var(--ink);font-weight:600;margin-right:4px}
 .wf-ctrl{align-items:center}
+
+/* show title under name in the mobile header */
+@media (max-width:620px){.brand small{display:block;margin-top:3px;font-size:10.5px;color:#9FB0C2;letter-spacing:.01em}}
