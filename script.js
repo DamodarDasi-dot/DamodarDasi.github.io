@@ -200,62 +200,6 @@ const DD_SERIES = {"names": {"k": "Compressor packages", "n2": "PSA nitrogen sys
   io.observe(m);
 })();
 
-/* v5: numbers spotlight — runs on its own, loops, holds briefly on interaction */
-(() => {
-  const w = document.querySelector('[data-spot]'); if (!w) return;
-  const slides = [...w.querySelectorAll('.sp-slide')], chips = [...w.querySelectorAll('.sp-chip')];
-  const card = w.querySelector('.sp-card');
-  const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
-  const STEP = 6000, HOLD = 6000, N = slides.length;
-  const fit = () => {
-    card.style.minHeight = '';
-    let mx = 0;
-    slides.forEach(s => { const was = s.classList.contains('on'); s.style.display = 'block'; s.style.animation = 'none'; mx = Math.max(mx, s.offsetHeight); s.style.display = ''; s.style.animation = ''; });
-    card.style.minHeight = mx + 'px';
-  };
-  fit(); addEventListener('resize', fit); document.fonts && document.fonts.ready.then(fit);
-  let i = 0, t = null, visible = false, held = false;
-  const count = el => {
-    if (reduce) return; const to = +el.dataset.to, t0 = performance.now(), d = 900;
-    const f = now => { const p = Math.min(1, (now - t0) / d), e = 1 - Math.pow(1 - p, 3); el.textContent = Math.round(to * e); if (p < 1) requestAnimationFrame(f); };
-    requestAnimationFrame(f);
-  };
-  function go(n, focus) {
-    i = (n + N) % N;
-    slides.forEach((s, k) => s.classList.toggle('on', k === i));
-    chips.forEach((c, k) => { const on = k === i; c.setAttribute('aria-selected', on); c.tabIndex = on ? 0 : -1; });
-    if (focus) chips[i].focus({ preventScroll: true });
-    const v = slides[i].querySelector('[data-to]'); if (v) count(v);
-  }
-  function schedule(ms) {
-    clearTimeout(t); t = null; w.classList.remove('tick');
-    if (reduce || !visible || held || document.hidden) return;
-    w.style.setProperty('--sp-dur', ms + 'ms'); void w.offsetWidth; w.classList.add('tick');
-    t = setTimeout(() => { go(i + 1); schedule(STEP); }, ms);
-  }
-  const userGo = (n, f) => { go(n, f); schedule(HOLD); };
-  chips.forEach((c, k) => c.addEventListener('click', () => userGo(k)));
-  w.querySelector('.sp-chips').addEventListener('keydown', e => {
-    const m = { ArrowRight: i + 1, ArrowLeft: i - 1, Home: 0, End: N - 1 }[e.key];
-    if (m === undefined) return; e.preventDefault(); userGo(m, true);
-  });
-  let x0 = null;
-  card.addEventListener('touchstart', e => { x0 = e.touches[0].clientX; held = true; schedule(0); }, { passive: true });
-  card.addEventListener('touchend', e => {
-    held = false; if (x0 === null) return; const dx = e.changedTouches[0].clientX - x0; x0 = null;
-    if (Math.abs(dx) > 50) userGo(i + (dx < 0 ? 1 : -1)); else schedule(HOLD);
-  }, { passive: true });
-  if (matchMedia('(hover: hover)').matches) {
-    card.addEventListener('mouseenter', () => { held = true; schedule(0); });
-    card.addEventListener('mouseleave', () => { held = false; schedule(STEP); });
-  }
-  document.addEventListener('visibilitychange', () => schedule(STEP));
-  if ('IntersectionObserver' in window) {
-    let first = true;
-    new IntersectionObserver(es => { visible = es[0].isIntersecting; if (visible && first) { first = false; go(0); } schedule(STEP); }, { threshold: 0.4 }).observe(w);
-  }
-})();
-
 /* v6: expertise scenes animate only while visible */
 (() => {
   const d = document.getElementById('expertise-cards'); if (!d || !('IntersectionObserver' in window)) { d && d.classList.add('play'); return; }
