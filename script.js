@@ -261,3 +261,19 @@ const DD_SERIES = {"names": {"k": "Compressor packages", "n2": "PSA nitrogen sys
   const d = document.getElementById('expertise-cards'); if (!d || !('IntersectionObserver' in window)) { d && d.classList.add('play'); return; }
   new IntersectionObserver(es => d.classList.toggle('play', es[0].isIntersecting), { threshold: 0.15 }).observe(d);
 })();
+
+/* v6: record contact actions in Google Analytics as `contact_click` */
+document.addEventListener('click', e => {
+  const a = e.target.closest && e.target.closest('a[href]'); if (!a || typeof gtag !== 'function') return;
+  const h = a.getAttribute('href') || '';
+  const method = /wa\.me|whatsapp/i.test(h) ? 'whatsapp' : /^mailto:/i.test(h) ? 'email' : /^tel:/i.test(h) ? 'phone'
+    : /linkedin\.com/i.test(h) ? 'linkedin' : /\.pdf($|\?)/i.test(h) || a.hasAttribute('download') ? 'resume_download' : null;
+  if (!method) return;
+  const sec = a.closest('section[id]');
+  gtag('event', 'contact_click', {
+    method,
+    link_text: (a.textContent || a.getAttribute('aria-label') || '').trim().replace(/\s+/g, ' ').slice(0, 80),
+    page_section: sec ? sec.id : (a.closest('header') ? 'header' : a.classList.contains('wa-fab') ? 'floating_button' : 'page'),
+    page_path: location.pathname
+  });
+}, { capture: true });
