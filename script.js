@@ -255,3 +255,9 @@ const DD_SERIES = {"names": {"k": "Compressor packages", "n2": "PSA nitrogen sys
     new IntersectionObserver(es => { visible = es[0].isIntersecting; if (visible && first) { first = false; go(0); } schedule(STEP); }, { threshold: 0.4 }).observe(w);
   }
 })();
+
+/* v6: expertise scenes animate only while visible */
+(() => {
+  const d = document.getElementById('expertise-cards'); if (!d || !('IntersectionObserver' in window)) { d && d.classList.add('play'); return; }
+  new IntersectionObserver(es => d.classList.toggle('play', es[0].isIntersecting), { threshold: 0.15 }).observe(d);
+})();
