@@ -68,6 +68,7 @@ const DD_SERIES = {"names": {"k": "Compressor packages", "n2": "PSA nitrogen sys
     rows.forEach(r => {
       const on = (tag === 'all' || tagsOf(r).includes(tag)) && words.every(w => textOf(r).includes(w));
       r.hidden = !on; if (on) n++;
+      if (r.parentElement.classList.contains('reg-item')) r.parentElement.hidden = !on;
       r.classList.remove('flash'); if (on && flash) { void r.offsetWidth; r.classList.add('flash'); }
     });
     filterBtns.forEach(b => b.setAttribute('aria-pressed', String(b.dataset.filter === tag)));
@@ -221,3 +222,14 @@ document.addEventListener('click', e => {
     page_path: location.pathname
   });
 }, { capture: true });
+
+/* register: expandable media cards */
+document.querySelectorAll('.rx-btn').forEach(b => {
+  const p = document.getElementById(b.getAttribute('aria-controls')); if (!p) return;
+  b.addEventListener('click', () => {
+    const open = b.getAttribute('aria-expanded') !== 'true';
+    b.setAttribute('aria-expanded', open); b.setAttribute('aria-label', (open ? 'Hide' : 'Show') + b.getAttribute('aria-label').replace(/^(Show|Hide)/, ''));
+    if (open) { p.hidden = false; requestAnimationFrame(() => requestAnimationFrame(() => p.classList.add('open'))); if (typeof gtag === 'function') gtag('event', 'project_expand', { project: b.getAttribute('aria-controls').slice(3) }); }
+    else { p.classList.remove('open'); setTimeout(() => { if (b.getAttribute('aria-expanded') !== 'true') p.hidden = true; }, 320); }
+  });
+});
