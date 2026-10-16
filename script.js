@@ -36,16 +36,22 @@ const DD_SERIES = {"names": {"k": "Compressor packages", "n2": "PSA nitrogen sys
 
   // Count-up for datasheet values
   const counters = document.querySelectorAll('[data-count]');
-  if (counters.length && !reduce && 'IntersectionObserver' in window) {
+  // The real value is always in the HTML. The roll-up starts at ~70% of it and is skipped
+  // for bots, screenshot tools and background tabs, so nobody ever reads a low number.
+  const bot = navigator.webdriver || /bot|crawl|spider|slurp|preview|headless|lighthouse|screenshot/i.test(navigator.userAgent);
+  if (counters.length && !reduce && !bot && 'IntersectionObserver' in window) {
     const run = (el) => {
-      const target = +el.dataset.count, t0 = performance.now(), dur = 1100;
+      const target = +el.dataset.count, from = Math.max(1, Math.round(target * 0.7)), t0 = performance.now(), dur = 650;
+      if (document.hidden || target < 10) return;          // small numbers: nothing to animate
+      const done = () => { el.textContent = target; };
       const step = (t) => {
         const p = Math.min(1, (t - t0) / dur), e = 1 - Math.pow(1 - p, 3);
-        el.textContent = Math.round(target * e);
-        if (p < 1) requestAnimationFrame(step);
+        el.textContent = Math.round(from + (target - from) * e);
+        if (p < 1) requestAnimationFrame(step); else done();
       };
-      el.textContent = '0';
+      el.textContent = from;
       requestAnimationFrame(step);
+      setTimeout(done, dur + 400);                          // guaranteed final value
     };
     const io = new IntersectionObserver(entries => {
       entries.forEach(en => { if (en.isIntersecting) { run(en.target); io.unobserve(en.target); } });
@@ -149,7 +155,7 @@ const DD_SERIES = {"names": {"k": "Compressor packages", "n2": "PSA nitrogen sys
   const rail = w.querySelector('.wf-rail'), count = w.querySelector('.wf-count b');
   const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
   const STEP = 8000, HOLD = 6000, N = tabs.length;
-  let i = 0, t = null, visible = false, held = false;
+  let i = 0, t = null, visible = false, held = false, pinned = false;
   w.style.setProperty('--wf-step', STEP + 'ms');
   const tick = ms => { w.style.setProperty('--wf-dur', ms + 'ms'); w.classList.remove('tick'); void w.offsetWidth; w.classList.add('tick'); };
   function go(n, focus) {
@@ -162,11 +168,18 @@ const DD_SERIES = {"names": {"k": "Compressor packages", "n2": "PSA nitrogen sys
   }
   function schedule(ms) {
     clearTimeout(t); t = null; w.classList.remove('tick', 'playing');
-    if (reduce || !visible || held || document.hidden) return;
+    if (reduce || !visible || held || pinned || document.hidden) return;
     w.classList.add('playing'); tick(ms);
     t = setTimeout(() => { go(i + 1); schedule(STEP); }, ms);
   }
-  const userGo = (n, focus) => { go(n, focus); schedule(HOLD); };
+  const samples = [...w.querySelectorAll('.wf-sample')];
+  const shut = () => { samples.forEach(d => { d.open = false; }); pinned = false; };
+  const userGo = (n, focus) => { if (n !== i) shut(); go(n, focus); schedule(HOLD); };
+  // opening a sample deliverable holds the run until it is closed or the visitor moves on
+  samples.forEach(d => d.addEventListener('toggle', () => {
+    pinned = samples.some(x => x.open); schedule(pinned ? 0 : HOLD);
+    if (d.open && typeof gtag === 'function') gtag('event', 'workflow_sample', { step: d.closest('.wf-panel').id });
+  }));
   w.querySelector('[data-wf-prev]').addEventListener('click', () => userGo(i - 1));
   w.querySelector('[data-wf-next]').addEventListener('click', () => userGo(i + 1));
   tabs.forEach((x, k) => x.addEventListener('click', () => userGo(k)));
