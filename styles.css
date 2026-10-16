@@ -1475,3 +1475,6 @@ html.lb-open{overflow:hidden}
 @media (hover:hover) and (pointer:fine){.sm-model:hover i{transform:translateX(3px)}}
 @media (max-width:760px){.sm-body{padding:12px}.sm-t{font-size:12.5px}.sm-t th,.sm-t td{padding:7px 8px}.sm-mono td:not(:nth-child(3)):not(:first-child){white-space:nowrap}.sm-calc div{grid-template-columns:1fr;gap:4px}.sm-t1{display:none}}
 @media (prefers-reduced-motion:reduce){.sm-body{animation:none}}
+
+.ev-grid.ev-2c{grid-template-columns:repeat(2,minmax(0,1fr))}
+@media (max-width:560px){.ev-grid.ev-2c{grid-template-columns:1fr}}
