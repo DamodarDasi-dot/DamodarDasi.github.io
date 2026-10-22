@@ -1480,3 +1480,12 @@ html.lb-open{overflow:hidden}
 @media (max-width:560px){.ev-grid.ev-2c{grid-template-columns:1fr}}
 
 .disciplines .go.go-off{color:var(--dim);font-weight:400}
+
+/* LinkedIn floating button, stacked above WhatsApp */
+.li-fab{position:fixed;right:calc(18px + env(safe-area-inset-right));bottom:calc(76px + env(safe-area-inset-bottom));z-index:60;display:flex;align-items:center;gap:8px;padding:11px 15px;background:#0A66C2;color:#fff;font:600 13px/1 var(--sans);border-radius:999px;box-shadow:0 8px 22px rgba(11,15,20,.25);text-decoration:none;transition:transform 160ms var(--ease-out),background-color 160ms ease}
+.li-fab svg{width:16px;height:16px}
+.li-fab:active{transform:scale(.97)}
+@media (hover:hover) and (pointer:fine){.li-fab:hover{transform:translateY(-2px);background:#004182}}
+.li-fab:focus-visible,.wa-fab:focus-visible{outline:2px solid #fff;outline-offset:3px}
+@media(max-width:600px){.li-fab{padding:13px;bottom:calc(82px + env(safe-area-inset-bottom))}.li-fab span{display:none}.li-fab svg{width:22px;height:22px}}
+@media print{.li-fab{display:none!important}}
