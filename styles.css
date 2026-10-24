@@ -1492,10 +1492,15 @@ html.lb-open{overflow:hidden}
 
 /* original package-layout illustrations */
 .ly-fig{margin:22px 0 28px}
-.ly-scroll{border:1px solid var(--border);border-radius:10px;overflow-x:auto;-webkit-overflow-scrolling:touch;background:#F7FAFC}
+.ly-scroll{border:1px solid #E2DCCF;border-radius:10px;overflow-x:auto;-webkit-overflow-scrolling:touch;background:#FAF8F3}
 .ly-scroll svg{display:block;width:100%;min-width:720px;height:auto}
 .ly-fig figcaption{margin-top:10px}
 .ly-fig figcaption strong{display:block;font-weight:600;font-size:14.5px}
 .ly-fig figcaption span{display:block;color:var(--ink-2);font-size:13.5px;line-height:1.5}
 
 .pid-head h3{color:#E2E8F0}
+
+/* premium navy-gold blueprint for typical P&IDs */
+.pid-wrap{background:#13213F!important;border-color:#2C3B5C!important}
+.pid-head p{color:#C9C2B2}
+.pid-head .button{border-color:#A9823A;color:#E3C584;background:transparent}
